@@ -13,6 +13,9 @@ orgs.newOrg('eclipse-score') {
       description: "The landing page website for the Score project",
       allow_merge_commit: true,
       allow_update_branch: false,
+      code_scanning_default_languages: [
+        "python",
+      ],
       code_scanning_default_setup_enabled: true,
       delete_branch_on_merge: false,
       homepage: "https://eclipse-score.github.io/",
@@ -36,6 +39,9 @@ orgs.newOrg('eclipse-score') {
       description: "Score project main repository",
       allow_merge_commit: true,
       allow_update_branch: false,
+      code_scanning_default_languages: [
+        "python",
+      ],
       code_scanning_default_setup_enabled: true,
       delete_branch_on_merge: false,
       homepage: "https://eclipse-score.github.io/score",
