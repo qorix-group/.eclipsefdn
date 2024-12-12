@@ -33,7 +33,6 @@ orgs.newOrg('eclipse-score') {
         "landing-page",
         "score"
       ],
-      web_commit_signoff_required: false,
     },
     orgs.newRepo('score') {
       description: "Score project main repository",
@@ -58,7 +57,6 @@ orgs.newOrg('eclipse-score') {
       topics+: [
         "score"
       ],
-      web_commit_signoff_required: false,
     },
 
     orgs.newRepo('inc_feo') {
