@@ -58,7 +58,50 @@ orgs.newOrg('eclipse-score') {
         "score"
       ],
     },
-
+    orgs.newRepo('bazel_registry') {
+      description: "Score project bazel modules registry",
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      delete_branch_on_merge: false,
+      topics+: [
+        "score",
+        "bazel",
+        "registry"
+      ],
+    },
+    orgs.newRepo('process_description') {
+      description: "Score project process description",
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      delete_branch_on_merge: false,
+      homepage: "https://eclipse-score.github.io/process_description",
+      environments: [
+        orgs.newEnvironment('github-pages') {
+          branch_policies+: [
+            "main"
+          ],
+          deployment_branch_policy: "selected",
+        },
+      ],
+      gh_pages_build_type: "workflow",
+      topics+: [
+        "score",
+        "process"
+      ],
+    },
+    orgs.newRepo('reference_integration') {
+      description: "Score project integration repository",
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      delete_branch_on_merge: false,
+      topics+: [
+        "score",
+        "integration"
+      ],
+    },
     orgs.newRepo('inc_feo') {
       description: "Incubation repository for the fixed execution order framework",
       allow_merge_commit: true,
@@ -91,7 +134,6 @@ orgs.newOrg('eclipse-score') {
       delete_branch_on_merge: false,
       homepage: "https://eclipse-score.github.io/inc_mw_per",
     },
-
   ],
 } + {
   # snippet added due to 'https://github.com/EclipseFdn/otterdog-configs/blob/main/blueprints/add-dot-github-repo.yml'
