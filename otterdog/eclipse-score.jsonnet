@@ -12,7 +12,7 @@ local customRuleset(name) =
     },
   };
 
-orgs.newOrg('eclipse-score') {
+orgs.newOrg('automotive.score', 'eclipse-score') {
   settings+: {
     has_discussions: true,
     discussion_source_repository: "eclipse-score/score",
