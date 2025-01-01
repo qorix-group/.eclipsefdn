@@ -20,6 +20,118 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       actions_can_approve_pull_request_reviews: false,
     },
   },
+  teams+: [
+    orgs.newTeam('automotive-score-technical-leads') {
+      members+: [
+        "FScholPer",
+        "antonkri",
+        "eclipsewebmaster",
+        "johannes-esr",
+        "ltekieli",
+        "markert-r",
+        "qor-lb"
+      ],
+    },
+    orgs.newTeam('cft-communication') {
+      members+: [
+        "FScholPer",
+        "antonkri",
+        "eclipsewebmaster",
+        "johannes-esr",
+        "ltekieli",
+        "markert-r",
+        "qor-lb"
+      ],
+    },
+    orgs.newTeam('cft-feo') {
+      members+: [
+        "FScholPer",
+        "antonkri",
+        "eclipsewebmaster",
+        "johannes-esr",
+        "ltekieli",
+        "markert-r",
+        "qor-lb"
+      ],
+    },
+    orgs.newTeam('cft-logging') {
+      members+: [
+        "FScholPer",
+        "antonkri",
+        "eclipsewebmaster",
+        "johannes-esr",
+        "ltekieli",
+        "markert-r",
+        "qor-lb"
+      ],
+    },
+    orgs.newTeam('cft-orchestration') {
+      members+: [
+        "FScholPer",
+        "antonkri",
+        "eclipsewebmaster",
+        "johannes-esr",
+        "ltekieli",
+        "markert-r",
+        "qor-lb"
+      ],
+    },
+    orgs.newTeam('cft-persistency') {
+      members+: [
+        "FScholPer",
+        "antonkri",
+        "eclipsewebmaster",
+        "johannes-esr",
+        "ltekieli",
+        "markert-r",
+        "qor-lb"
+      ],
+    },
+    orgs.newTeam('community-architecture') {
+      members+: [
+        "FScholPer",
+        "antonkri",
+        "eclipsewebmaster",
+        "johannes-esr",
+        "ltekieli",
+        "markert-r",
+        "qor-lb"
+      ],
+    },
+    orgs.newTeam('community-operational') {
+      members+: [
+        "FScholPer",
+        "antonkri",
+        "eclipsewebmaster",
+        "johannes-esr",
+        "ltekieli",
+        "markert-r",
+        "qor-lb"
+      ],
+    },
+    orgs.newTeam('community-process') {
+      members+: [
+        "FScholPer",
+        "antonkri",
+        "eclipsewebmaster",
+        "johannes-esr",
+        "ltekieli",
+        "markert-r",
+        "qor-lb"
+      ],
+    },
+    orgs.newTeam('community-testing') {
+      members+: [
+        "FScholPer",
+        "antonkri",
+        "eclipsewebmaster",
+        "johannes-esr",
+        "ltekieli",
+        "markert-r",
+        "qor-lb"
+      ],
+    },
+  ],
   _repositories+:: [
     orgs.newRepo('eclipse-score.github.io') {
       description: "The landing page website for the Score project",
