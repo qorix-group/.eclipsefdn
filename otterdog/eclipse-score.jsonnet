@@ -309,7 +309,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
       code_scanning_default_setup_enabled: true,
       description: "Score project main repository",
-      gh_pages_build_type: "workflow",
+      gh_pages_build_type: "legacy",
+      gh_pages_source_branch: "gh-pages",
+      gh_pages_source_path: "/",
       has_discussions: true,
       homepage: "https://eclipse-score.github.io/score",
       topics+: [
@@ -329,10 +331,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
       environments: [
         orgs.newEnvironment('github-pages') {
-          branch_policies+: [
-            "main"
-          ],
-          deployment_branch_policy: "selected",
+          deployment_branch_policy: "all"
         },
       ],
     },
