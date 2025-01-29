@@ -8,6 +8,11 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       actions_can_approve_pull_request_reviews: false,
     },
   },
+  secrets+: [
+    orgs.newOrgSecret('ECLIPSE_GITLAB_API_TOKEN') {
+      value: "pass:bots/automotive.score/gitlab.eclipse.org/api-token",
+    },
+  ],
   teams+: [
     orgs.newTeam('automotive-score-technical-leads') {
       members+: [
