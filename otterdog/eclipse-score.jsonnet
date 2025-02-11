@@ -336,7 +336,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
       environments: [
         orgs.newEnvironment('github-pages') {
-          deployment_branch_policy: "all"
+          deployment_branch_policy: "all",
+          required_reviewers: [
+            "@eclipse-score/community-operational"
+          ],
         },
       ],
     },
