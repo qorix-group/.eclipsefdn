@@ -8,11 +8,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       actions_can_approve_pull_request_reviews: false,
     },
   },
-  secrets+: [
-    orgs.newOrgSecret('ECLIPSE_GITLAB_API_TOKEN') {
-      value: "pass:bots/automotive.score/gitlab.eclipse.org/api-token",
-    },
-  ],
   teams+: [
     orgs.newTeam('automotive-score-technical-leads') {
       members+: [
@@ -28,6 +23,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       members+: [
         "FScholPer",
         "antonkri",
+        "arsibo",
         "johannes-esr",
         "ltekieli",
         "markert-r",
@@ -36,8 +32,11 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     orgs.newTeam('cft-feo') {
       members+: [
+        "AlexanderLanin",
         "FScholPer",
+        "MathiasDanzeisen",
         "antonkri",
+        "arsibo",
         "johannes-esr",
         "ltekieli",
         "markert-r",
@@ -48,16 +47,21 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       members+: [
         "FScholPer",
         "antonkri",
+        "arsibo",
         "johannes-esr",
         "ltekieli",
         "markert-r",
+        "pahmann",
         "qor-lb"
       ],
     },
     orgs.newTeam('cft-orchestration') {
       members+: [
+        "AlexanderLanin",
         "FScholPer",
+        "MathiasDanzeisen",
         "antonkri",
+        "arsibo",
         "johannes-esr",
         "ltekieli",
         "markert-r",
@@ -68,6 +72,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       members+: [
         "FScholPer",
         "antonkri",
+        "arsibo",
         "johannes-esr",
         "ltekieli",
         "markert-r",
@@ -78,6 +83,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       members+: [
         "FScholPer",
         "antonkri",
+        "arsibo",
         "johannes-esr",
         "ltekieli",
         "markert-r",
@@ -86,7 +92,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     orgs.newTeam('community-operational') {
       members+: [
+        "AlexanderLanin",
         "FScholPer",
+        "PhilipPartsch",
         "antonkri",
         "johannes-esr",
         "ltekieli",
@@ -97,10 +105,15 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newTeam('community-process') {
       members+: [
         "FScholPer",
+        "PandaeDo",
+        "PhilipPartsch",
         "antonkri",
+        "aschemmel-tech",
         "johannes-esr",
         "ltekieli",
         "markert-r",
+        "masc2023",
+        "pahmann",
         "qor-lb"
       ],
     },
@@ -111,8 +124,14 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "johannes-esr",
         "ltekieli",
         "markert-r",
+        "pahmann",
         "qor-lb"
       ],
+    },
+  ],
+  secrets+: [
+    orgs.newOrgSecret('ECLIPSE_GITLAB_API_TOKEN') {
+      value: "pass:bots/automotive.score/gitlab.eclipse.org/api-token",
     },
   ],
   _repositories+:: [
@@ -252,6 +271,37 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
+    orgs.newRepo('itf') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      description: "Integration Testing Framework repository",
+      gh_pages_build_type: "legacy",
+      gh_pages_source_branch: "gh-pages",
+      gh_pages_source_path: "/",
+      has_discussions: true,
+      homepage: "https://eclipse-score.github.io/itf",
+      topics+: [
+        "itf",
+        "score",
+        "testing"
+      ],
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: {
+            dismisses_stale_reviews: true,
+            required_approving_review_count: 1,
+            requires_code_owner_review: true,
+          },
+        },
+      ],
+      environments: [
+        orgs.newEnvironment('github-pages'),
+      ],
+    },
     orgs.newRepo('process_description') {
       allow_merge_commit: true,
       allow_update_branch: false,
@@ -335,45 +385,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
       environments: [
-        orgs.newEnvironment('github-pages') {
-          deployment_branch_policy: "all"
-        },
-      ],
-    },
-    orgs.newRepo('itf') {
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      code_scanning_default_languages+: [
-#        "python"
-      ],
-      code_scanning_default_setup_enabled: true,
-      description: "Integration Testing Framework repository",
-      gh_pages_build_type: "legacy",
-      gh_pages_source_branch: "gh-pages",
-      gh_pages_source_path: "/",
-      has_discussions: true,
-      homepage: "https://eclipse-score.github.io/itf",
-      topics+: [
-        "score",
-        "itf",
-        "testing"
-      ],
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
-        },
-      ],
-      environments: [
-        orgs.newEnvironment('github-pages') {
-          deployment_branch_policy: "all"
-        },
+        orgs.newEnvironment('github-pages'),
       ],
     },
   ],
