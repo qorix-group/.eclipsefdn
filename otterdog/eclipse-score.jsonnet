@@ -274,6 +274,44 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
+    orgs.newRepo('inc_process_test_management') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      description: "Incubation repository for Process - Sphinx-Test management",
+      homepage: "https://eclipse-score.github.io/inc_process_test_management",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: {
+            dismisses_stale_reviews: true,
+            required_approving_review_count: 1,
+            requires_code_owner_review: false,
+          },
+        },
+      ],
+    },
+    orgs.newRepo('inc_process_variant_management') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      description: "Incubation repository for Process - Sphinx-Variant management",
+      homepage: "https://eclipse-score.github.io/inc_process_variant_management",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: {
+            dismisses_stale_reviews: true,
+            required_approving_review_count: 1,
+            requires_code_owner_review: false,
+          },
+        },
+      ],
+    },
     orgs.newRepo('itf') {
       allow_merge_commit: true,
       allow_update_branch: false,
