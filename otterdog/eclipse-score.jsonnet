@@ -217,6 +217,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newRepo('inc_mw_com') {
       allow_merge_commit: true,
       allow_update_branch: false,
+      code_scanning_default_languages+: [
+        "python"
+      ],
       code_scanning_default_setup_enabled: true,
       description: "Incubation repository for interprocess communication framework",
       homepage: "https://eclipse-score.github.io/inc_mw_com",
@@ -391,6 +394,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newRepo('tooling') {
       allow_merge_commit: true,
       allow_update_branch: false,
+      code_scanning_default_languages+: [
+        "python"
+      ],
       code_scanning_default_setup_enabled: true,
       description: "Repository for hosting score host tools",
       homepage: "https://eclipse-score.github.io/tooling",
