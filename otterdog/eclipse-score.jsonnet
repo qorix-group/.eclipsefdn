@@ -437,7 +437,60 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
       code_scanning_default_setup_enabled: true,
       description: "Repository for hosting score host tools",
-      homepage: "https://eclipse-score.github.io/tooling",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: {
+            dismisses_stale_reviews: true,
+            required_approving_review_count: 1,
+            requires_code_owner_review: true,
+          },
+        },
+      ],
+    },
+    orgs.newRepo('baselibs') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      description: "base libraries including common functionality",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: {
+            dismisses_stale_reviews: true,
+            required_approving_review_count: 1,
+            requires_code_owner_review: true,
+          },
+        },
+      ],
+    },
+    orgs.newRepo('communication') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      description: "Repository for the communication module LoLa",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: {
+            dismisses_stale_reviews: true,
+            required_approving_review_count: 1,
+            requires_code_owner_review: true,
+          },
+        },
+      ],
+    },
+    orgs.newRepo('operating_system') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      description: "Repository for the module operating system",
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
