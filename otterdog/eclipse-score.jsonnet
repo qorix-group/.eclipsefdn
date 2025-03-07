@@ -542,7 +542,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
-    orgs.newRepo('module-template-repository') {
+    orgs.newRepo('module_template_repository') {
       allow_merge_commit: true,
       allow_update_branch: false,
       code_scanning_default_setup_enabled: true,
