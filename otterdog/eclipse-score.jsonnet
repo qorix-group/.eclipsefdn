@@ -128,6 +128,21 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "qor-lb"
       ],
     },
+    orgs.newTeam('codeowner-lola') {
+      members+: [
+        "castler",
+        "hoe-jo",
+        "LittleHuba"
+      ],
+    },
+    orgs.newTeam('codeowner-baselibs') {
+      members+: [
+        "castler",
+        "hoe-jo",
+        "LittleHuba",
+        "ramceb"
+      ],
+    },
   ],
   secrets+: [
     orgs.newOrgSecret('ECLIPSE_GITLAB_API_TOKEN') {
