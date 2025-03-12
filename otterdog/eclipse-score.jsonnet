@@ -128,6 +128,21 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "qor-lb"
       ],
     },
+    orgs.newTeam('codeowner-lola') {
+      members+: [
+        "castler",
+        "hoe-jo",
+        "LittleHuba"
+      ],
+    },
+    orgs.newTeam('codeowner-baselibs') {
+      members+: [
+        "castler",
+        "hoe-jo",
+        "LittleHuba",
+        "ramceb"
+      ],
+    },
   ],
   secrets+: [
     orgs.newOrgSecret('ECLIPSE_GITLAB_API_TOKEN') {
@@ -451,9 +466,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
     orgs.newRepo('baselibs') {
-      allow_merge_commit: true,
+      allow_merge_commit: false,
       allow_update_branch: false,
-      code_scanning_default_setup_enabled: true,
+      code_scanning_default_setup_enabled: false,
       description: "base libraries including common functionality",
       rulesets: [
         orgs.newRepoRuleset('main') {
@@ -465,13 +480,18 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             required_approving_review_count: 1,
             requires_code_owner_review: true,
           },
+          bypass_actors+: [
+            "@eclipse-score/codeowner-baselibs:pull_request",
+          ],
+          allows_force_pushes: false,
+          requires_linear_history: true,
         },
       ],
     },
     orgs.newRepo('communication') {
-      allow_merge_commit: true,
+      allow_merge_commit: false,
       allow_update_branch: false,
-      code_scanning_default_setup_enabled: true,
+      code_scanning_default_setup_enabled: false,
       description: "Repository for the communication module LoLa",
       rulesets: [
         orgs.newRepoRuleset('main') {
@@ -483,6 +503,11 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             required_approving_review_count: 1,
             requires_code_owner_review: true,
           },
+          bypass_actors+: [
+            "@eclipse-score/codeowner-lola:pull_request",
+          ],
+          allows_force_pushes: false,
+          requires_linear_history: true,
         },
       ],
     },
@@ -510,6 +535,25 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       code_scanning_default_setup_enabled: true,
       description: "Hosts templates and examples for score tools and workflows",
       homepage: "https://eclipse-score.github.io/examples",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: {
+            dismisses_stale_reviews: true,
+            required_approving_review_count: 1,
+            requires_code_owner_review: true,
+          },
+        },
+      ],
+    },
+    orgs.newRepo('toolchains_gcc') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      description: "Bazel toolchains for GNU GCC",
+      homepage: "https://eclipse-score.github.io/toolchains_gcc",
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
