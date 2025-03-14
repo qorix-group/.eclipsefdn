@@ -481,7 +481,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             requires_code_owner_review: true,
           },
           bypass_actors+: [
-            "@eclipse-score/codeowner-baselibs:always",
+            "@eclipse-score/codeowner-baselibs",
           ],
           allows_force_pushes: false,
           requires_linear_history: true,
@@ -504,7 +504,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             requires_code_owner_review: true,
           },
           bypass_actors+: [
-            "@eclipse-score/codeowner-lola:always",
+            "@eclipse-score/codeowner-lola",
           ],
           allows_force_pushes: false,
           requires_linear_history: true,
