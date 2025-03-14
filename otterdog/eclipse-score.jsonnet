@@ -605,5 +605,23 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
+    orgs.newRepo('cicd-workflows') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      description: "Reusable GitHub Actions workflows for CI/CD automation",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: {
+            dismisses_stale_reviews: true,
+            required_approving_review_count: 1,
+            requires_code_owner_review: true,
+          },
+        },
+      ],
+    },
   ],
 }
