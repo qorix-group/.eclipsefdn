@@ -148,6 +148,18 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newOrgSecret('ECLIPSE_GITLAB_API_TOKEN') {
       value: "pass:bots/automotive.score/gitlab.eclipse.org/api-token",
     },
+    orgs.newOrgSecret('SCORE_QNX_LICENSE') {
+      value: "********",
+      visibility: "private",
+    },
+    orgs.newOrgSecret('SCORE_QNX_PASSWORD') {
+      value: "********",
+      visibility: "private",
+    },
+    orgs.newOrgSecret('SCORE_QNX_USER') {
+      value: "********",
+      visibility: "private",
+    },
   ],
   _repositories+:: [
     orgs.newRepo('.github') {
@@ -570,6 +582,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newRepo('toolchains_qnx') {
       allow_merge_commit: true,
       allow_update_branch: false,
+      code_scanning_default_languages+: [
+        "python"
+      ],
       code_scanning_default_setup_enabled: true,
       description: "Bazel toolchains for QNX",
       homepage: "https://eclipse-score.github.io/toolchains_qnx",
