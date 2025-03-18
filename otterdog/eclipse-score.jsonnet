@@ -150,15 +150,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     orgs.newOrgSecret('SCORE_QNX_LICENSE') {
       value: "********",
-      visibility: "private",
     },
     orgs.newOrgSecret('SCORE_QNX_PASSWORD') {
       value: "********",
-      visibility: "private",
     },
     orgs.newOrgSecret('SCORE_QNX_USER') {
       value: "********",
-      visibility: "private",
     },
   ],
   _repositories+:: [
