@@ -595,6 +595,15 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             required_approving_review_count: 1,
             requires_code_owner_review: true,
           },
+          required_status_checks+: {
+            status_checks+: [
+              "toolchains-qnx-build-all",
+              "toolchains-qnx-tests-build-all",
+            ],
+          },
+          required_merge_queue: orgs.newMergeQueue() {
+            merge_method: "MERGE",
+          },
         },
       ],
     },
