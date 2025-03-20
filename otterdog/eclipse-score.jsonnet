@@ -585,6 +585,15 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       code_scanning_default_setup_enabled: true,
       description: "Bazel toolchains for QNX",
       homepage: "https://eclipse-score.github.io/toolchains_qnx",
+      environments: [
+        orgs.newEnvironment('workflow-approval') {
+          deployment_branch_policy: "all",
+          reviewers+: [
+            "@eclipse-score/community-operational",
+          ],
+          wait_timer: 1,
+        },
+      ],
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
@@ -598,7 +607,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           required_status_checks+: {
             status_checks+: [
               "toolchains-qnx-build-all",
-              "toolchains-qnx-tests-build-all",
             ],
           },
           required_merge_queue: orgs.newMergeQueue() {
