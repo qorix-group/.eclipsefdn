@@ -149,13 +149,25 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       value: "pass:bots/automotive.score/gitlab.eclipse.org/api-token",
     },
     orgs.newOrgSecret('SCORE_QNX_LICENSE') {
+      selected_repositories+: [
+        "toolchains_qnx"
+      ],
       value: "********",
+      visibility: "selected",
     },
     orgs.newOrgSecret('SCORE_QNX_PASSWORD') {
+      selected_repositories+: [
+        "toolchains_qnx"
+      ],
       value: "********",
+      visibility: "selected",
     },
     orgs.newOrgSecret('SCORE_QNX_USER') {
+      selected_repositories+: [
+        "toolchains_qnx"
+      ],
       value: "********",
+      visibility: "selected",
     },
   ],
   _repositories+:: [
