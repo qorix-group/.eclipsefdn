@@ -598,7 +598,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         orgs.newEnvironment('workflow-approval') {
           deployment_branch_policy: "all",
           reviewers+: [
-            "@eclipse-score/community-operational",
+            "@eclipse-score/automotive-score-committers",
           ],
           wait_timer: 1,
         },
