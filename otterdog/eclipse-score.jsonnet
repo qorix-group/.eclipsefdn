@@ -145,6 +145,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
   ],
   secrets+: [
+    orgs.newOrgSecret('DEVELOCITY_API_TOKEN') {
+      value: "pass:bots/automotive.score/develocity.eclipse.org/api-token",
+    },
     orgs.newOrgSecret('ECLIPSE_GITLAB_API_TOKEN') {
       value: "pass:bots/automotive.score/gitlab.eclipse.org/api-token",
     },
