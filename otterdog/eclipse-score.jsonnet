@@ -143,6 +143,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "ramceb"
       ],
     },
+    orgs.newTeam('infrastructure-maintainers') {
+      members+: [
+        "AlexanderLanin",
+        "MaximilianSoerenPollak",
+      ],
+    },
   ],
   secrets+: [
     orgs.newOrgSecret('DEVELOCITY_API_TOKEN') {
