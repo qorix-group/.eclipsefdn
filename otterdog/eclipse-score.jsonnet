@@ -309,6 +309,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       code_scanning_default_setup_enabled: true,
       description: "Incubation repository for persistency framework",
       homepage: "https://eclipse-score.github.io/inc_mw_per",
+      gh_pages_build_type: "workflow",
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
