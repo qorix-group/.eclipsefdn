@@ -1,7 +1,16 @@
 local orgs = import 'vendor/otterdog-defaults/otterdog-defaults.libsonnet';
 
+local default_review_rule = {
+  dismisses_stale_reviews: true,
+  required_approving_review_count: 1,
+  requires_code_owner_review: true,
+};
+
 orgs.newOrg('automotive.score', 'eclipse-score') {
   settings+: {
+    name: "Eclipse S-CORE",
+    description: "",
+
     discussion_source_repository: "eclipse-score/score",
     has_discussions: true,
     workflows+: {
@@ -200,11 +209,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -227,11 +232,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
       environments: [
@@ -254,11 +255,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -276,11 +273,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -295,11 +288,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -315,11 +304,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -381,11 +366,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
           required_status_checks+: {
             status_checks+: [
               "itf-build-all",
@@ -417,11 +398,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
       environments: [
@@ -447,11 +424,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -476,11 +449,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
       environments: [
@@ -488,23 +457,33 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
     orgs.newRepo('tooling') {
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      code_scanning_default_languages+: [
-        "python"
-      ],
-      code_scanning_default_setup_enabled: true,
       description: "Repository for hosting score host tools",
+
+      // These are disabled by default
+      dependabot_security_updates_enabled: true,
+
+      // Squash only
+      allow_rebase_merge: false,
+      allow_merge_commit: false,
+      allow_squash_merge: true,
+      
+      // Remove some features, to avoid having too many options where stuff is located
+      has_discussions: false,
+      has_projects: false,
+      has_wiki: false,
+
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
+
+          // Enable emergency operations, as nothing in score will work when there is a
+          // problem with the tooling.
+          bypass_actors+: [
+            "@eclipse-score/infrastructure-maintainers",
+          ],
         },
       ],
     },
@@ -518,11 +497,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
           bypass_actors+: [
             "@eclipse-score/codeowner-baselibs",
           ],
@@ -541,11 +516,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
           bypass_actors+: [
             "@eclipse-score/codeowner-lola",
           ],
@@ -564,11 +535,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -583,11 +550,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -602,11 +565,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -621,11 +580,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -652,11 +607,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
           required_status_checks+: {
             status_checks+: [
               "toolchains-qnx-build-all",
@@ -679,11 +630,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -698,11 +645,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -716,11 +659,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -734,11 +673,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -752,11 +687,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
@@ -770,11 +701,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "refs/heads/main"
           ],
-          required_pull_request+: {
-            dismisses_stale_reviews: true,
-            required_approving_review_count: 1,
-            requires_code_owner_review: true,
-          },
+          required_pull_request+: default_review_rule,
         },
       ],
     },
