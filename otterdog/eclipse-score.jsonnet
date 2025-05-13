@@ -6,6 +6,35 @@ local default_review_rule = {
   requires_code_owner_review: true,
 };
 
+local newInfrastructureTeamRepo(name) = orgs.newRepo(name) {
+  // These are disabled by default
+  dependabot_security_updates_enabled: true,
+
+  // Squash only
+  allow_rebase_merge: false,
+  allow_merge_commit: false,
+  allow_squash_merge: true,
+  
+  // Remove some features, to avoid having too many options where stuff is located
+  has_discussions: false,
+  has_projects: false,
+  has_wiki: false,
+
+  rulesets: [
+    orgs.newRepoRuleset('main') {
+      include_refs+: [
+        "refs/heads/main"
+      ],
+      required_pull_request+: default_review_rule,
+
+      // Enable emergency operations.
+      bypass_actors+: [
+        "@eclipse-score/infrastructure-maintainers",
+      ],
+    },
+  ],
+};
+
 orgs.newOrg('automotive.score', 'eclipse-score') {
   settings+: {
     name: "Eclipse S-CORE",
@@ -456,36 +485,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         orgs.newEnvironment('github-pages'),
       ],
     },
-    orgs.newRepo('tooling') {
-      description: "Repository for hosting score host tools",
-
-      // These are disabled by default
-      dependabot_security_updates_enabled: true,
-
-      // Squash only
-      allow_rebase_merge: false,
-      allow_merge_commit: false,
-      allow_squash_merge: true,
-      
-      // Remove some features, to avoid having too many options where stuff is located
-      has_discussions: false,
-      has_projects: false,
-      has_wiki: false,
-
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: default_review_rule,
-
-          // Enable emergency operations, as nothing in score will work when there is a
-          // problem with the tooling.
-          bypass_actors+: [
-            "@eclipse-score/infrastructure-maintainers",
-          ],
-        },
-      ],
+    newInfrastructureTeamRepo('tooling') {
+      description: "Tooling for Eclipse S-CORE",
     },
     orgs.newRepo('baselibs') {
       allow_merge_commit: false,
@@ -677,19 +678,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
-    orgs.newRepo('docs-as-code') {
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      code_scanning_default_setup_enabled: true,
-      description: "Contains docs-as-code tooling",
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: default_review_rule,
-        },
-      ],
+    newInfrastructureTeamRepo('docs-as-code') {
+      description: "Docs-as-code tooling for Eclipse S-CORE",
+
+      // GitHub Pages via modern workflow approach
+      gh_pages_build_type: "workflow",
+      homepage: "https://eclipse-score.github.io/docs-as-code",
     },
     orgs.newRepo('inc_orchestrator') {
       allow_merge_commit: true,
