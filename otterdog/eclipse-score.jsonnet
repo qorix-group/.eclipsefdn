@@ -216,6 +216,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       value: "********",
       visibility: "selected",
     },
+    orgs.newOrgSecret('RENOVATE_TOKEN') {
+      value: "pass:bots/automotive.score/github.com/renovate-token",
+    },
   ],
   _repositories+:: [
     orgs.newRepo('.github') {
