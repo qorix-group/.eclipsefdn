@@ -677,20 +677,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
-    orgs.newRepo('process') {
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      code_scanning_default_setup_enabled: true,
-      description: "Score process and docs-as-code repository",
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: default_review_rule,
-        },
-      ],
-    },
     newInfrastructureTeamRepo('docs-as-code') {
       description: "Docs-as-code tooling for Eclipse S-CORE",
 
