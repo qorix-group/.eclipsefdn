@@ -654,6 +654,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
       description: "C++ & Rust Bazel Template Repository",
       is_template: true,  // Enable template repository functionality
+      gh_pages_build_type: "workflow",
+      homepage: "https://eclipse-score.github.io/module_template",
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
@@ -695,6 +697,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "actions",
       ],
       description: "Incubation repo for orchestration",
+      gh_pages_build_type: "workflow",
+      homepage: "https://eclipse-score.github.io/inc_orchestrator",
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
