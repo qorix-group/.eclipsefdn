@@ -222,6 +222,22 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
   ],
   _repositories+:: [
     orgs.newRepo('.github') {
+      description: "Houses the organisation README",
+      code_scanning_default_setup_enabled: true,
+      code_scanning_default_languages+: [
+        "actions",
+      ],
+      topics+: [
+        "score"
+      ],
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: default_review_rule,
+        },
+      ],
     },
     orgs.newRepo('bazel_registry') {
       allow_merge_commit: true,
