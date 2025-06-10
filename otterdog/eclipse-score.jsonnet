@@ -348,6 +348,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       allow_merge_commit: true,
       allow_update_branch: false,
       code_scanning_default_setup_enabled: true,
+      code_scanning_default_languages+: [
+        "actions"
+      ],
       description: "Incubation repository for persistency framework",
       homepage: "https://eclipse-score.github.io/inc_mw_per",
       gh_pages_build_type: "workflow",
@@ -718,6 +721,26 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Incubation repo for orchestration",
       gh_pages_build_type: "workflow",
       homepage: "https://eclipse-score.github.io/inc_orchestrator",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: default_review_rule,
+        },
+      ],
+    },
+    orgs.newRepo('bazel_registry_ui') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      code_scanning_default_languages+: [
+        "actions",
+      ],
+      description: "House the ui for bazel_registry in Score",
+      gh_pages_build_type: "workflow",
+      homepage: "https://eclipse-score.github.io/bazel_registry_ui",
+      forked_repository:"bazel-contrib/bcr-ui",
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
