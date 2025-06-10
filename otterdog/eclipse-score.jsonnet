@@ -439,6 +439,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       allow_update_branch: false,
       code_scanning_default_setup_enabled: true,
       code_scanning_default_languages+: [
+        "actions",
         "python"
       ],
       description: "Score project process description",
