@@ -750,5 +750,19 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
+    orgs.newRepo('testing_tools') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      description: "Repository for testing utilities",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: default_review_rule,
+        },
+      ],
+    },
   ],
 }
