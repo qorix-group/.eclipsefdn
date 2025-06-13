@@ -1,3 +1,5 @@
+# Overview, Defaults, Reference see https://otterdog.eclipse.org/projects/automotive.score
+
 local orgs = import 'vendor/otterdog-defaults/otterdog-defaults.libsonnet';
 
 local default_review_rule = {
@@ -731,25 +733,13 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
-    orgs.newRepo('bazel_registry_ui') {
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      // code_scanning_default_setup_enabled: true,
-      // code_scanning_default_languages+: [
-      //   "actions",
-      // ],
+    newInfrastructureTeamRepo('bazel_registry_ui') {
       description: "House the ui for bazel_registry in Score",
-      gh_pages_build_type: "workflow",
+      gh_pages_build_type: "legacy",
+      gh_pages_source_branch: "gh-pages",
+      gh_pages_source_path: "/",
       homepage: "https://eclipse-score.github.io/bazel_registry_ui",
       forked_repository:"bazel-contrib/bcr-ui",
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: default_review_rule,
-        },
-      ],
     },
     orgs.newRepo('testing_tools') {
       allow_merge_commit: true,
