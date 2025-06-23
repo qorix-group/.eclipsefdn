@@ -292,6 +292,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
+    orgs.newRepo('eclipse-score-website') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      delete_branch_on_merge: false,
+      dependabot_alerts_enabled: false,
+    },
     orgs.newRepo('inc_feo') {
       allow_merge_commit: true,
       allow_update_branch: false,
