@@ -246,6 +246,13 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newOrgSecret('RENOVATE_TOKEN') {
       value: "pass:bots/automotive.score/github.com/renovate-token",
     },
+    orgs.newOrgSecret('GH_PUBLISH_TOKEN') {
+      selected_repositories+: [
+        "eclipse-score-website"
+      ],
+      value: "pass:bots/automotive.score/github.com/website-token",
+      visibility: "selected"
+    }
   ],
   _repositories+:: [
     orgs.newRepo('.github') {
