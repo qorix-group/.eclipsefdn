@@ -411,6 +411,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       allow_merge_commit: true,
       allow_update_branch: false,
       code_scanning_default_setup_enabled: true,
+      code_scanning_default_languages: [
+        "actions",
+      ],
       description: "Integration Testing Framework repository",
       gh_pages_build_type: "legacy",
       gh_pages_source_branch: "gh-pages",
@@ -514,6 +517,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
     newInfrastructureTeamRepo('tooling') {
       description: "Tooling for Eclipse S-CORE",
+      environments+: [
+        orgs.newEnvironment('copilot'),
+      ],
     },
 
     orgs.newRepo('baselibs') {
@@ -680,6 +686,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
       gh_pages_build_type: "workflow",
       homepage: "https://eclipse-score.github.io/docs-as-code",
+      environments+: [
+        orgs.newEnvironment('copilot'),
+      ],
     },
 
     orgs.newRepo('inc_orchestrator') {
