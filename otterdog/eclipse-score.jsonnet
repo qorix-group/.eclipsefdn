@@ -746,5 +746,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     newModuleRepo('inc_json') {
       description: "Incubation repository for JSON module",
     },
+    newModuleRepo('feo') {
+      description: "Repository for the Fixed Order Execution (FEO) framework",
+    },
   ],
 }
