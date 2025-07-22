@@ -446,7 +446,21 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         orgs.newEnvironment('github-pages'),
       ],
     },
-
+    orgs.newRepo('bazel_platforms') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      description: "Bazel platform definitions used by S-CORE modules",
+      homepage: "https://eclipse-score.github.io/bazel_platforms",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: default_review_rule,
+        },
+      ],
+    },
     newScoreRepo('process_description', pages = true) {
       has_projects: true,
 
@@ -521,7 +535,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         orgs.newEnvironment('copilot'),
       ],
     },
-
     orgs.newRepo('baselibs') {
       allow_merge_commit: false,
       allow_update_branch: false,
