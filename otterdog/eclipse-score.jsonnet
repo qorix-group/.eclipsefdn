@@ -750,5 +750,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     newModuleRepo('feo') {
       description: "Repository for the Fixed Order Execution (FEO) framework",
     },
+    newModuleRepo('inc_daal') {
+      description: "Incubation repository for DAAL module",
+    },
   ],
 }
