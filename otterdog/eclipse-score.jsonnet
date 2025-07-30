@@ -252,7 +252,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
       value: "pass:bots/automotive.score/github.com/website-token",
       visibility: "selected"
-    }
+    },
+    orgs.newOrgSecret('SCORE_BOT_PAT') {
+      value: "pass:bots/automotive.score/github.com/token-hd6226",
+    },
   ],
   _repositories+:: [
     orgs.newRepo('.github') {
@@ -728,6 +731,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     newScoreRepo("inc_nlohmann_json", true) {
         description: "Nlohmann JSON Library",
         forked_repository: "nlohmann/json",
+        default_branch: "develop",
         allow_rebase_merge: true,
         allow_merge_commit: true,
         has_discussions: true,
