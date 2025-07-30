@@ -66,12 +66,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
   settings+: {
     name: "Eclipse S-CORE",
     description: "",
-
     discussion_source_repository: "eclipse-score/score",
     has_discussions: true,
-    workflows+: {
-      actions_can_approve_pull_request_reviews: false,
-    },
   },
   teams+: [
     orgs.newTeam('automotive-score-technical-leads') {
