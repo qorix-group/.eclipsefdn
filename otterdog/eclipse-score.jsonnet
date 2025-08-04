@@ -778,5 +778,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     newModuleRepo('inc_os_autosd') {
       description: "Incubation repository for AutoSD Development Platform",
     },
+    newModuleRepo('bazel-tools-python') {
+      description: "Repository for python static code checker",
+    },    
   ],
 }
