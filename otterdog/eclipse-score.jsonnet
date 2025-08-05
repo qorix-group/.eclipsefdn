@@ -780,6 +780,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     newModuleRepo('bazel-tools-python') {
       description: "Repository for python static code checker",
-    },    
+    },
+    newModuleRepo('inc_config_management') {
+      description: "Incubation repository for config management",
+    },        
   ],
 }
