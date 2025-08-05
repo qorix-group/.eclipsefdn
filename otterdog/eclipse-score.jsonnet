@@ -137,7 +137,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "johannes-esr",
         "ltekieli",
         "markert-r",
-        "qor-lb"
+        "qor-lb",
+        "umaucher"
       ],
     },
     orgs.newTeam('community-architecture') {
