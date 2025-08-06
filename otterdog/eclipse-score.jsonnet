@@ -304,6 +304,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       allow_update_branch: false,
       delete_branch_on_merge: false,
       dependabot_alerts_enabled: false,
+      environments: [
+        orgs.newEnvironment('pull-request-preview'),
+      ],
     },
     orgs.newRepo('eclipse-score-website-published') {
       allow_merge_commit: true,
