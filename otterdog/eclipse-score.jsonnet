@@ -319,6 +319,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       allow_update_branch: false,
       delete_branch_on_merge: false,
       dependabot_alerts_enabled: false,
+      gh_pages_build_type: "legacy",
+      gh_pages_source_branch: "gh-pages-preview",
+      gh_pages_source_path: "/",
+      environments: [
+        orgs.newEnvironment('github-pages'),
+      ],
     },
     orgs.newRepo('inc_feo') {
       allow_merge_commit: true,
