@@ -799,6 +799,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     newModuleRepo('inc_config_management') {
       description: "Incubation repository for config management",
-    },        
+    },
+    newModuleRepo('bazel-tools-cc') {
+      description: "Repository for clang-tidy based static code checker",
+    },
   ],
 }
