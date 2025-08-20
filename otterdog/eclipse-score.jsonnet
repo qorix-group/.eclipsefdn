@@ -421,6 +421,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           },
         },
       ],
+      environments: [
+        orgs.newEnvironment('github-pages'),
+      ],
     },
     orgs.newRepo('itf') {
       allow_merge_commit: true,
@@ -640,6 +643,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       code_scanning_default_setup_enabled: true,
       description: "Bazel toolchains for GNU GCC",
       homepage: "https://eclipse-score.github.io/toolchains_gcc_packages",
+      code_scanning_default_languages+: [
+        "actions",
+      ],
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
