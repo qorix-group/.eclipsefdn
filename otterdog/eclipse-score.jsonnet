@@ -347,10 +347,11 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newRepo('inc_lifecycle') {
       allow_merge_commit: true,
       allow_update_branch: false,
-      code_scanning_default_setup_enabled: true,
-      code_scanning_default_languages+: [
-        "actions",
-      ],
+      // TODO: re-enable after some code has been added to the repository
+      // code_scanning_default_setup_enabled: true,
+      // code_scanning_default_languages+: [
+      //   "actions",
+      // ],
       description: "Incubation repository for the lifecycle feature",
       homepage: "https://eclipse-score.github.io/inc_lifecycle",
       rulesets: [
