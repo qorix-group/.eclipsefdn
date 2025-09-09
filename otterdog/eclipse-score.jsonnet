@@ -344,6 +344,24 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
+    orgs.newRepo('inc_lifecycle') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: true,
+      code_scanning_default_languages+: [
+        "actions",
+      ],
+      description: "Incubation repository for the lifecycle feature",
+      homepage: "https://eclipse-score.github.io/inc_lifecycle",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: default_review_rule,
+        },
+      ],
+    },
     orgs.newRepo('inc_mw_com') {
       allow_merge_commit: true,
       allow_update_branch: false,
