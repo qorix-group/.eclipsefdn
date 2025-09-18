@@ -219,6 +219,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newOrgSecret('ECLIPSE_GITLAB_API_TOKEN') {
       value: "pass:bots/automotive.score/gitlab.eclipse.org/api-token",
     },
+    orgs.newOrgSecret('SCORE_APPROVALS_PAT') {
+      value: "pass:bots/automotive.score/github.com/approval-token",
+    },
     orgs.newOrgSecret('SCORE_QNX_LICENSE') {
       selected_repositories+: [
         "toolchains_qnx"
@@ -827,6 +830,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     newModuleRepo('bazel-tools-cc') {
       description: "Repository for clang-tidy based static code checker",
+    },
+    newModuleRepo('logging') {
+      description: "Repository for logging framework",
     },
   ],
 }
