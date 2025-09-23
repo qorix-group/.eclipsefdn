@@ -366,6 +366,25 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
+    orgs.newRepo('score-crates') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      // TODO: re-enable after some code has been added to the repository
+      // code_scanning_default_setup_enabled: true,
+      // code_scanning_default_languages+: [
+      //   "actions",
+      // ],
+      description: "Repository to provide a defined list of rust crates to be used as bzl_mods",
+      homepage: "https://eclipse-score.github.io/score-crates",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: default_review_rule,
+        },
+      ],
+    },
     orgs.newRepo('inc_mw_com') {
       allow_merge_commit: true,
       allow_update_branch: false,
