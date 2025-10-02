@@ -202,7 +202,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "castler",
         "hoe-jo",
         "LittleHuba",
-        "ramceb"
+        "ramceb",
+        "nradakovic",
       ],
     },
     orgs.newTeam('infrastructure-maintainers') {
