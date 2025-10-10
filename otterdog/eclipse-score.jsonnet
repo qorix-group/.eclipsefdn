@@ -824,6 +824,18 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Common Devcontainer for Eclipse S-CORE",
     },
 
+    newInfrastructureTeamRepo('test_integration') {
+      description: "Tests for the integration infrastructure",
+    },
+    newInfrastructureTeamRepo('test_module_a') {
+      description: "Dummy module for testing the integration infrastructure",
+      template_repository: "eclipse-score/module_template",
+    },
+    newInfrastructureTeamRepo('test_module_b') {
+      description: "Dummy module for testing the integration infrastructure",
+      template_repository: "eclipse-score/module_template",
+    },
+
     orgs.newRepo('testing_tools') {
       allow_merge_commit: true,
       allow_update_branch: false,
