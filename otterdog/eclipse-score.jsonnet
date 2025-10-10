@@ -209,7 +209,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newTeam('infrastructure-maintainers') {
       members+: [
         "AlexanderLanin",
+        "dcalavrezo-qorix",
         "MaximilianSoerenPollak",
+        "nradakovic",
       ],
     },
   ],
