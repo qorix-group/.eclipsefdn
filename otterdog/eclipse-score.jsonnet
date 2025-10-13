@@ -608,6 +608,13 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         orgs.newEnvironment('copilot'),
       ],
     },
+    newInfrastructureTeamRepo('tools') {
+      description: "Home of score-tools, the new pypi based tools approach",
+      environments+: [
+        orgs.newEnvironment('copilot'),
+      ],
+    },
+
     orgs.newRepo('baselibs') {
       allow_merge_commit: false,
       allow_update_branch: false,
