@@ -879,6 +879,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     newModuleRepo('scrample') {
       description: "Repository for example component",
-    },    
+    },  
+    newModuleRepo('inc_abi_compatible_datatypes') {
+      description: "Incubation repository for ABI compatible data types feature",
+    },
+    newModuleRepo('inc_someip_gateway') {
+      description: "Incubation repository for SOME/IP gateway feature",
+    }  
   ],
 }
