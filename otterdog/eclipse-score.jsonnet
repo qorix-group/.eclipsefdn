@@ -227,21 +227,24 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     orgs.newOrgSecret('SCORE_QNX_LICENSE') {
       selected_repositories+: [
-        "toolchains_qnx"
+        "toolchains_qnx",
+        "inc_mw_per"
       ],
       value: "********",
       visibility: "selected",
     },
     orgs.newOrgSecret('SCORE_QNX_PASSWORD') {
       selected_repositories+: [
-        "toolchains_qnx"
+        "toolchains_qnx",
+        "inc_mw_per"
       ],
       value: "********",
       visibility: "selected",
     },
     orgs.newOrgSecret('SCORE_QNX_USER') {
       selected_repositories+: [
-        "toolchains_qnx"
+        "toolchains_qnx",
+        "inc_mw_per"
       ],
       value: "********",
       visibility: "selected",
