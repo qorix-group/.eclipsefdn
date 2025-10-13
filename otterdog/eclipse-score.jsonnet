@@ -209,7 +209,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newTeam('infrastructure-maintainers') {
       members+: [
         "AlexanderLanin",
+        "dcalavrezo-qorix",
         "MaximilianSoerenPollak",
+        "nradakovic",
       ],
     },
   ],
@@ -425,9 +427,14 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     newScoreRepo('inc_mw_per', true) {
       allow_merge_commit: true,
       allow_update_branch: false,
-
       description: "Incubation repository for persistency framework",
-
+      environments: [
+        orgs.newEnvironment('workflow-approval') {
+          deployment_branch_policy: "all",
+          reviewers+: [],
+          wait_timer: 0,
+        },      
+      ],
     },
     orgs.newRepo('inc_process_test_management') {
       allow_merge_commit: true,
@@ -549,10 +556,13 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       allow_merge_commit: true,
       allow_update_branch: false,
       code_scanning_default_setup_enabled: true,
+      code_scanning_default_languages+: [
+        "python",
+      ],
       description: "Score project integration repository",
       topics+: [
         "integration",
-        "score"
+        "score",
       ],
       rulesets: [
         orgs.newRepoRuleset('main') {
@@ -704,7 +714,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       allow_merge_commit: true,
       allow_update_branch: false,
       code_scanning_default_languages+: [
-        "python"
+        "actions",
+        "python",
       ],
       code_scanning_default_setup_enabled: true,
       description: "Bazel toolchains for QNX",
@@ -816,6 +827,18 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
     newInfrastructureTeamRepo('devcontainer') {
       description: "Common Devcontainer for Eclipse S-CORE",
+    },
+
+    newInfrastructureTeamRepo('test_integration') {
+      description: "Tests for the integration infrastructure",
+    },
+    newInfrastructureTeamRepo('test_module_a') {
+      description: "Dummy module for testing the integration infrastructure",
+      template_repository: "eclipse-score/module_template",
+    },
+    newInfrastructureTeamRepo('test_module_b') {
+      description: "Dummy module for testing the integration infrastructure",
+      template_repository: "eclipse-score/module_template",
     },
 
     orgs.newRepo('testing_tools') {
