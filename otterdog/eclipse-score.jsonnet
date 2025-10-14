@@ -228,7 +228,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newOrgSecret('SCORE_QNX_LICENSE') {
       selected_repositories+: [
         "toolchains_qnx",
-        "inc_mw_per"
+        "inc_mw_per",
+        "baselibs",
       ],
       value: "********",
       visibility: "selected",
@@ -236,7 +237,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newOrgSecret('SCORE_QNX_PASSWORD') {
       selected_repositories+: [
         "toolchains_qnx",
-        "inc_mw_per"
+        "inc_mw_per",
+        "baselibs",
       ],
       value: "********",
       visibility: "selected",
@@ -244,7 +246,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newOrgSecret('SCORE_QNX_USER') {
       selected_repositories+: [
         "toolchains_qnx",
-        "inc_mw_per"
+        "inc_mw_per",
+        "baselibs",
       ],
       value: "********",
       visibility: "selected",
