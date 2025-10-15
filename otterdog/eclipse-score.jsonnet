@@ -204,6 +204,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "LittleHuba",
         "ramceb",
         "nradakovic",
+        "4og",
       ],
     },
     orgs.newTeam('infrastructure-maintainers') {
