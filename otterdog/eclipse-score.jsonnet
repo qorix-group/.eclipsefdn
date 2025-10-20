@@ -229,7 +229,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newOrgSecret('SCORE_QNX_LICENSE') {
       selected_repositories+: [
         "toolchains_qnx",
-        "inc_mw_per",
+        "persistency",
         "baselibs",
       ],
       value: "********",
@@ -238,7 +238,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newOrgSecret('SCORE_QNX_PASSWORD') {
       selected_repositories+: [
         "toolchains_qnx",
-        "inc_mw_per",
+        "persistency",
         "baselibs",
       ],
       value: "********",
@@ -247,7 +247,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newOrgSecret('SCORE_QNX_USER') {
       selected_repositories+: [
         "toolchains_qnx",
-        "inc_mw_per",
+        "persistency",
         "baselibs",
       ],
       value: "********",
@@ -428,7 +428,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
-    newScoreRepo('inc_mw_per', true) {
+    newScoreRepo('persistency', true) {
+      aliases: [
+        "inc_mw_per",
+      ],
       allow_merge_commit: true,
       allow_update_branch: false,
       description: "Incubation repository for persistency framework",
