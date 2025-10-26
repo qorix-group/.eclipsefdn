@@ -207,6 +207,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "4og",
       ],
     },
+    orgs.newTeam('codeowner-baselibs_rust') {
+      members+: [
+        "pawelrutkaq",
+        "awillenbuecher-xq-tec",
+      ],
+    },
     orgs.newTeam('infrastructure-maintainers') {
       members+: [
         "AlexanderLanin",
@@ -824,6 +830,32 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         allow_merge_commit: true,
         has_discussions: true,
         has_wiki: true,
+    },
+
+    newScoreRepo('baselibs_rust', true) {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      description: "Repository for the Rust baselibs",
+      environments: [
+        orgs.newEnvironment('workflow-approval') {
+          deployment_branch_policy: "all",
+          reviewers+: [],
+          wait_timer: 0,
+        },
+      ],
+      // Override the rulesets
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          bypass_actors+: [
+            "@eclipse-score/codeowner-baselibs_rust",
+          ],
+          required_pull_request+: default_review_rule,
+        },
+      ],
+      template_repository: "eclipse-score/module_template",
     },
 
     newInfrastructureTeamRepo('bazel_registry_ui') {
