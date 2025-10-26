@@ -209,8 +209,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     orgs.newTeam('codeowner-baselibs_rust') {
       members+: [
-        "pawelrutkaq",
-        "awillenbuecher-xq-tec",
       ],
     },
     orgs.newTeam('infrastructure-maintainers') {
