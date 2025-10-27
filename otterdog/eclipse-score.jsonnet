@@ -938,6 +938,18 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     newModuleRepo('inc_someip_gateway') {
       description: "Incubation repository for SOME/IP gateway feature",
-    }  
+    },
+    newModuleRepo('inc_time') {
+      description: "Incubation repository for time feature",
+    },
+    newModuleRepo('inc_diagnostics') {
+      description: "Incubation repository for diagnostics feature",
+    },
+    newModuleRepo('inc_ai_platform') {
+      description: "Incubation repository for AI platform feature",
+    },
+    newModuleRepo('inc_gen_ai') {
+      description: "Incubation repository for Generative AI feature",
+    }
   ],
 }
