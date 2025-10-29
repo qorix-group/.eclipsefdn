@@ -799,7 +799,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
-    orgs.newRepo('inc_orchestrator') {
+    orgs.newRepo('orchestrator') {
+      aliases: [
+        "inc_orchestrator",
+      ],
       allow_merge_commit: true,
       allow_update_branch: false,
       code_scanning_default_setup_enabled: true,
@@ -807,9 +810,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "actions",
         "python",
       ],
-      description: "Incubation repo for orchestration",
+      description: "Repository for the Orchestration framework incl. async executor",
       gh_pages_build_type: "workflow",
-      homepage: "https://eclipse-score.github.io/inc_orchestrator",
+      homepage: "https://eclipse-score.github.io/orchestrator",
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
