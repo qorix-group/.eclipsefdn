@@ -441,7 +441,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
       allow_merge_commit: true,
       allow_update_branch: false,
-      description: "Incubation repository for persistency framework",
+      description: "Repository for persistency framework",
       environments: [
         orgs.newEnvironment('workflow-approval') {
           deployment_branch_policy: "all",
@@ -813,7 +813,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "actions",
         "python",
       ],
-      description: "Repository for the Orchestration framework incl. async executor",
+      description: "Orchestration framework & Safe async runtime for Rust",
       gh_pages_build_type: "workflow",
       homepage: "https://eclipse-score.github.io/orchestrator",
       rulesets: [
