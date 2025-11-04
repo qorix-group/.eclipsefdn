@@ -126,7 +126,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "johannes-esr",
         "ltekieli",
         "markert-r",
-        "qor-lb"
+        "qor-lb",
+        "pawelrutkaq",
+        "vinodreddy-g"
       ],
     },
     orgs.newTeam('cft-persistency') {
@@ -138,7 +140,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "ltekieli",
         "markert-r",
         "qor-lb",
-        "umaucher"
+        "umaucher",
+        "vinodreddy-g",
+        "arkjedrz"
       ],
     },
     orgs.newTeam('community-architecture') {
