@@ -581,28 +581,17 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
-    orgs.newRepo('reference_integration') {
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      code_scanning_default_setup_enabled: true,
-      code_scanning_default_languages+: [
-        "python",
-        "actions",
-      ],
+    newInfrastructureTeamRepo('reference_integration', true) {
       description: "Score project integration repository",
       topics+: [
         "integration",
-        "score",
-      ],
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: default_review_rule,
-        },
       ],
     },
+
+    newScoreRepo('os_images', false) {
+      description: "OS Images for testing and deliveries",
+    },
+
     orgs.newRepo('score') {
       allow_merge_commit: true,
       allow_update_branch: false,
