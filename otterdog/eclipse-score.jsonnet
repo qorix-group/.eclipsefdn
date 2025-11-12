@@ -834,20 +834,19 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     newScoreRepo("inc_nlohmann_json", true) {
         description: "Nlohmann JSON Library",
         forked_repository: "nlohmann/json",
-        default_branch: "develop",
+        default_branch: "main",
         allow_rebase_merge: true,
         allow_merge_commit: true,
         has_discussions: true,
         has_wiki: true,
+        dependabot_alerts_enabled: true,
+        dependabot_security_updates_enabled: false,
         rulesets: [
           orgs.newRepoRuleset('main') {
             include_refs+: [
               "refs/heads/main"
             ],
             required_pull_request+: default_review_rule,
-            bypass_actors+: [
-              "@eclipse-score/codeowner-inc_nlohmann_json",
-            ],
             allows_force_pushes: false,
             requires_linear_history: true,
           },
