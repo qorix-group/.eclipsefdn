@@ -288,6 +288,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newOrgSecret('SCORE_BOT_PAT') {
       value: "pass:bots/automotive.score/github.com/token-hd6226",
     },
+    orgs.newOrgSecret('SCORE_BOT_CLASSIC_PAT') {
+      value: "pass:bots/automotive.score/github.com/token-hd6722",
+    },
   ],
   _repositories+:: [
     orgs.newRepo('.github') {
