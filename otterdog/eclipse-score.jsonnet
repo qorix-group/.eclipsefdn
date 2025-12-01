@@ -642,6 +642,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       allow_update_branch: false,
       code_scanning_default_setup_enabled: false,
       description: "base libraries including common functionality",
+      gh_pages_build_type: "workflow",
+      homepage: "https://eclipse-score.github.io/baselibs",
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
