@@ -247,6 +247,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       	"communication",
         "reference_integration",
         "scrample",
+        "bazel_cpp_toolchains",
       ],
       value: "********",
       visibility: "selected",
@@ -259,6 +260,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "communication",
         "reference_integration",
         "scrample",
+        "bazel_cpp_toolchains",
       ],
       value: "********",
       visibility: "selected",
@@ -271,6 +273,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "communication",
         "reference_integration",
         "scrample",
+        "bazel_cpp_toolchains",
       ],
       value: "********",
       visibility: "selected",
@@ -707,6 +710,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           required_pull_request+: default_review_rule,
         },
       ],
+    },
+    newScoreRepo('bazel_cpp_toolchains', false) {
+      description: "Bazel C/C++ toolchain configuration repository",
     },
     orgs.newRepo('toolchains_gcc') {
       allow_merge_commit: true,
