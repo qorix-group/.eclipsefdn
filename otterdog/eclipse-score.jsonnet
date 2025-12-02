@@ -890,6 +890,19 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       template_repository: "eclipse-score/module_template",
     },
 
+    newInfrastructureTeamRepo('score_rust_policies') {
+      description: "Centralized Rust linting and formatting policies for S-CORE, including safety-critical guidelines.",
+      gh_pages_build_type: "workflow",
+      homepage: "https://eclipse-score.github.io/score_rust_policies",
+      topics+: [
+        "rust",
+        "linting",
+        "formatting",
+        "score",
+        "policy",
+      ],
+    },
+
     newInfrastructureTeamRepo('bazel_registry_ui') {
       description: "House the ui for bazel_registry in Score",
       gh_pages_build_type: "legacy",
