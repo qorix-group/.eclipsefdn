@@ -62,6 +62,17 @@ local newInfrastructureTeamRepo(name, pages = false) = newScoreRepo(name, pages)
   ],
 };
 
+# Publication to pypi can only be triggered by infrastructure-maintainers and only from main branch
+local pypi_infra_env = orgs.newEnvironment('pypi') {
+  reviewers+: [
+    "@eclipse-score/infrastructure-maintainers",
+  ],
+  deployment_branch_policy: "selected",
+  branch_policies+: [
+    "main"
+  ],
+};
+
 orgs.newOrg('automotive.score', 'eclipse-score') {
   settings+: {
     name: "Eclipse S-CORE",
@@ -637,6 +648,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Home of score-tools, the new pypi based tools approach",
       environments+: [
         orgs.newEnvironment('copilot'),
+        pypi_infra_env,
       ],
     },
 
@@ -922,6 +934,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
     newInfrastructureTeamRepo('dash-license-scan') {
       description: "pipx/uvx wrapper for the dash-licenses tool",
+      environments+: [
+        pypi_infra_env,
+      ],
     },
     
     newInfrastructureTeamRepo('test_integration') {
