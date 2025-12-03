@@ -1002,7 +1002,16 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     newModuleRepo('scrample') {
       description: "Repository for example component",
-    },  
+      environments: [
+        orgs.newEnvironment('workflow-approval') {
+          deployment_branch_policy: "all",
+          reviewers+: [
+            "@eclipse-score/automotive-score-committers",
+          ],
+          wait_timer: 1,
+        },
+      ],
+    },
     newModuleRepo('inc_abi_compatible_datatypes') {
       description: "Incubation repository for ABI compatible data types feature",
     },
