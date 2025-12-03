@@ -62,6 +62,17 @@ local newInfrastructureTeamRepo(name, pages = false) = newScoreRepo(name, pages)
   ],
 };
 
+# Publication to pypi can only be triggered by infrastructure-maintainers and only from main branch
+local pypi_infra_env = orgs.newEnvironment('pypi') {
+  reviewers+: [
+    "@eclipse-score/infrastructure-maintainers",
+  ],
+  deployment_branch_policy: "selected",
+  branch_policies+: [
+    "main"
+  ],
+};
+
 orgs.newOrg('automotive.score', 'eclipse-score') {
   settings+: {
     name: "Eclipse S-CORE",
@@ -226,6 +237,14 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "dcalavrezo-qorix",
         "MaximilianSoerenPollak",
         "nradakovic",
+      ],
+    },
+    orgs.newTeam('codeowner-kyron') {
+      members+: [
+        "pawelrutkaq",
+        "vinodreddy-g",
+        "qor-lb",
+        "nicu1989",
       ],
     },
   ],
@@ -637,6 +656,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Home of score-tools, the new pypi based tools approach",
       environments+: [
         orgs.newEnvironment('copilot'),
+        pypi_infra_env,
       ],
     },
 
@@ -890,6 +910,19 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       template_repository: "eclipse-score/module_template",
     },
 
+    newInfrastructureTeamRepo('score_rust_policies') {
+      description: "Centralized Rust linting and formatting policies for S-CORE, including safety-critical guidelines.",
+      gh_pages_build_type: "workflow",
+      homepage: "https://eclipse-score.github.io/score_rust_policies",
+      topics+: [
+        "rust",
+        "linting",
+        "formatting",
+        "score",
+        "policy",
+      ],
+    },
+
     newInfrastructureTeamRepo('bazel_registry_ui') {
       description: "House the ui for bazel_registry in Score",
       gh_pages_build_type: "legacy",
@@ -909,6 +942,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
     newInfrastructureTeamRepo('dash-license-scan') {
       description: "pipx/uvx wrapper for the dash-licenses tool",
+      environments+: [
+        pypi_infra_env,
+      ],
     },
     
     newInfrastructureTeamRepo('test_integration') {
@@ -993,6 +1029,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     newModuleRepo('inc_gen_ai') {
       description: "Incubation repository for Generative AI feature",
+    },
+    newModuleRepo('kyron') {
+      description: "Safe async runtime for Rust",
     }
   ],
 }
