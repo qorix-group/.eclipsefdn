@@ -1031,6 +1031,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Incubation repository for Generative AI feature",
     },
     newModuleRepo('kyron') {
+      allow_merge_commit: true,
       description: "Safe async runtime for Rust",
     }
   ],
