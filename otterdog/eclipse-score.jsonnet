@@ -247,6 +247,15 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "nicu1989",
       ],
     },
+    orgs.newTeam('codeowner-config_management') {
+      members+: [
+        "antonkri",
+        "4og",
+        "michaelsaborov",
+        "darkwisebear",
+        "wei2374",
+      ],
+    },    
   ],
   secrets+: [
     orgs.newOrgSecret('DEVELOCITY_API_TOKEN') {
@@ -1034,8 +1043,26 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       allow_merge_commit: true,
       description: "Safe async runtime for Rust",
     },
-    newModuleRepo('config_management') {
-      description: "repository for config management",
+    orgs.newRepo('config_management') {
+      allow_merge_commit: false,
+      allow_update_branch: false,
+      code_scanning_default_setup_enabled: false,
+      has_discussions: true,
+      has_wiki: false,
+      description: "Repository for config management",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: default_review_rule,
+          bypass_actors+: [
+            "@eclipse-score/codeowner-config_management",
+          ],
+          allows_force_pushes: false,
+          requires_linear_history: true,
+        },
+      ],
     }
   ],
 }
