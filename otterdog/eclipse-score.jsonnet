@@ -1033,6 +1033,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     newModuleRepo('kyron') {
       allow_merge_commit: true,
       description: "Safe async runtime for Rust",
+    },
+    newModuleRepo('config_management') {
+      description: "repository for config management",
     }
   ],
 }
