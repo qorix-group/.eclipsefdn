@@ -276,7 +276,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "reference_integration",
         "scrample",
         "bazel_cpp_toolchains",
-        "score-ferrocene-builder",
+        "score_ferrocene_builder",
       ],
       value: "********",
       visibility: "selected",
@@ -290,7 +290,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "reference_integration",
         "scrample",
         "bazel_cpp_toolchains",
-        "score-ferrocene-builder",
+        "score_ferrocene_builder",
       ],
       value: "********",
       visibility: "selected",
@@ -304,7 +304,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "reference_integration",
         "scrample",
         "bazel_cpp_toolchains",
-        "score-ferrocene-builder",
+        "score_ferrocene_builder",
       ],
       value: "********",
       visibility: "selected",
@@ -831,7 +831,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
-    newInfrastructureTeamRepo('score-ferrocene-builder') {
+    newInfrastructureTeamRepo('score_ferrocene_builder') {
       description: "Builder for Ferrocene artifacts",
     },
 
