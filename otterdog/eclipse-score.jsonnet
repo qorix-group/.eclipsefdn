@@ -272,10 +272,11 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "toolchains_qnx",
         "persistency",
         "baselibs",
-      	"communication",
+        "communication",
         "reference_integration",
         "scrample",
         "bazel_cpp_toolchains",
+        "ferrocene_toolchain_builder",
       ],
       value: "********",
       visibility: "selected",
@@ -289,6 +290,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "reference_integration",
         "scrample",
         "bazel_cpp_toolchains",
+        "ferrocene_toolchain_builder",
       ],
       value: "********",
       visibility: "selected",
@@ -302,6 +304,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "reference_integration",
         "scrample",
         "bazel_cpp_toolchains",
+        "ferrocene_toolchain_builder",
       ],
       value: "********",
       visibility: "selected",
@@ -826,6 +829,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           required_pull_request+: default_review_rule,
         },
       ],
+    },
+
+    newInfrastructureTeamRepo('ferrocene_toolchain_builder') {
+      description: "Builder for Ferrocene artifacts",
     },
 
     newInfrastructureTeamRepo('module_template', pages = true) {
