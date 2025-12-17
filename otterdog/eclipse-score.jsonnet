@@ -425,6 +425,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       //   "actions",
       // ],
       description: "Incubation repository for the lifecycle feature",
+      gh_pages_build_type: "workflow",
       homepage: "https://eclipse-score.github.io/inc_lifecycle",
       rulesets: [
         orgs.newRepoRuleset('main') {
