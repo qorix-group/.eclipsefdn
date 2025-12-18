@@ -3,9 +3,32 @@
 local orgs = import 'vendor/otterdog-defaults/otterdog-defaults.libsonnet';
 
 local default_review_rule = {
+  # dismiss approved reviews automatically when a new commit is pushed
   dismisses_stale_reviews: true,
+
+  # The number of approvals required before a pull request can be merged [0,10]
   required_approving_review_count: 1,
+
+  # require an approved review in pull requests including files with a designated code owner
   requires_code_owner_review: true,
+
+  # TODO: the most recent push must be approved by someone other than the person who pushed it
+  # requires_last_push_approval: true,
+};
+
+local block_tagging(tags, bypass) =
+ orgs.newRepoRuleset('tags-protection') {
+  target: "tag",
+  # bot has admin access anyway, but let's be explicit
+  bypass_actors+: ["@eclipse-score-bot"] + bypass,
+  include_refs+: [std.format("refs/tags/%s", tag) for tag in tags],
+  allows_creations: false,
+  allows_deletions: false,
+  allows_updates: false,
+
+  # Those are not needed. Override in order to drop the defaults.
+  required_pull_request: null,
+  required_status_checks: null,
 };
 
 // Hint: Override all options as required when creating a new repository. See below for examples.
@@ -362,6 +385,17 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "bazel",
         "registry",
         "score"
+      ],
+      rulesets+: [
+        block_tagging(
+          [
+            "*", # block all tag creations
+            # alternatively, specify specific tags to block here, e.g. "v*"
+          ],
+          [
+            "@eclipse-score/infrastructure-maintainers",
+          ]
+        ),
       ],
     },
 
