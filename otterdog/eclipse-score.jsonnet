@@ -706,8 +706,14 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     orgs.newRepo('communication') {
       allow_merge_commit: false,
-      allow_update_branch: false,
-      code_scanning_default_setup_enabled: false,
+      allow_update_branch: true,
+      code_scanning_default_languages+: [
+        "actions",
+        "c-cpp",
+        "python",
+        "rust",
+      ],
+      code_scanning_default_setup_enabled: true,
       has_discussions: true,
       has_wiki: false,
       description: "Repository for the communication module LoLa",
