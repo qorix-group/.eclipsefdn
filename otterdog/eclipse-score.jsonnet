@@ -69,7 +69,8 @@ local pypi_infra_env = orgs.newEnvironment('pypi') {
   ],
   deployment_branch_policy: "selected",
   branch_policies+: [
-    "main"
+    "main",
+    "tag:v*",
   ],
 };
 
