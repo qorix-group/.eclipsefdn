@@ -141,14 +141,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     orgs.newTeam('cft-logging') {
       members+: [
-        "FScholPer",
         "antonkri",
-        "arsibo",
-        "johannes-esr",
-        "ltekieli",
-        "markert-r",
-        "pahmann",
-        "qor-lb"
+        "rmaddikery",
+        "hoppe-and-dreams"
       ],
     },
     orgs.newTeam('cft-orchestration') {
@@ -1065,7 +1060,20 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Repository for clang-tidy based static code checker",
     },
     newModuleRepo('logging') {
-      description: "Repository for logging framework",
+      description: "Repository for logging daemon",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: default_review_rule,
+          bypass_actors+: [
+            "@eclipse-score/cft-logging",
+          ],
+          allows_force_pushes: false,
+          requires_linear_history: true,
+        },
+      ],
     },
     newModuleRepo('scrample') {
       description: "Repository for example component",
