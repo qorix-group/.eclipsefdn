@@ -1112,6 +1112,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       allow_merge_commit: true,
       description: "Safe async runtime for Rust",
     },
+    newModuleRepo('inc_time') {
+      allow_merge_commit: true,
+      description: "incubation repo for time sync module",
+    },
     orgs.newRepo('config_management') {
       allow_merge_commit: false,
       allow_update_branch: false,
