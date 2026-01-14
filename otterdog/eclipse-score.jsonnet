@@ -245,7 +245,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       members+: [
       ],
     },
-    orgs.newTeam('codeowner-inc_nlohmann_json') {
+    orgs.newTeam('codeowner-nlohmann_json') {
       members+: [
         "4og",
       ],
@@ -927,7 +927,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
-    newScoreRepo("inc_nlohmann_json", true) {
+    newScoreRepo("nlohmann_json", true) {
+        aliases: [
+          "inc_nlohmann_json",
+        ],
         description: "Nlohmann JSON Library",
         forked_repository: "nlohmann/json",
         default_branch: "main",
