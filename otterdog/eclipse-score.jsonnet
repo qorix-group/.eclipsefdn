@@ -300,6 +300,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "kyron",
         "orchestrator",
         "ferrocene_toolchain_builder",
+        "lifecycle",
       ],
       value: "********",
       visibility: "selected",
@@ -318,6 +319,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "kyron",
         "orchestrator",
         "ferrocene_toolchain_builder",
+        "lifecycle",
       ],
       value: "********",
       visibility: "selected",
@@ -336,6 +338,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "kyron",
         "orchestrator",
         "ferrocene_toolchain_builder",
+        "lifecycle",
       ],
       value: "********",
       visibility: "selected",
@@ -458,7 +461,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
-    orgs.newRepo('inc_lifecycle') {
+    orgs.newRepo('lifecycle') {
       allow_merge_commit: true,
       allow_update_branch: false,
       // TODO: re-enable after some code has been added to the repository
@@ -476,6 +479,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           ],
           required_pull_request+: default_review_rule,
         },
+      ],
+      aliases: [
+        "inc_lifecycle",
       ],
     },
     orgs.newRepo('score-crates') {
