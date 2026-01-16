@@ -69,20 +69,7 @@ local newModuleRepo(name) = newScoreRepo(name, true) {
 };
 
 local newInfrastructureTeamRepo(name, pages = false) = newScoreRepo(name, pages) {
-  // Override the rulesets
-  rulesets: [
-    orgs.newRepoRuleset('main') {
-      include_refs+: [
-        "refs/heads/main"
-      ],
-      required_pull_request+: default_review_rule,
-
-      // Enable emergency operations.
-      bypass_actors+: [
-        "@eclipse-score/infrastructure-maintainers",
-      ],
-    },
-  ],
+  // No special settings for infrastructure team repos at the moment
 };
 
 # Publication to pypi can only be triggered by infrastructure-maintainers and only from main branch
@@ -180,18 +167,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "FScholPer",
         "antonkri",
         "arsibo",
-        "johannes-esr",
-        "ltekieli",
-        "markert-r",
-        "qor-lb"
-      ],
-    },
-    orgs.newTeam('community-operational') {
-      members+: [
-        "AlexanderLanin",
-        "FScholPer",
-        "PhilipPartsch",
-        "antonkri",
         "johannes-esr",
         "ltekieli",
         "markert-r",
@@ -300,6 +275,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "kyron",
         "orchestrator",
         "ferrocene_toolchain_builder",
+        "lifecycle",
       ],
       value: "********",
       visibility: "selected",
@@ -318,6 +294,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "kyron",
         "orchestrator",
         "ferrocene_toolchain_builder",
+        "lifecycle",
       ],
       value: "********",
       visibility: "selected",
@@ -336,6 +313,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "kyron",
         "orchestrator",
         "ferrocene_toolchain_builder",
+        "lifecycle",
       ],
       value: "********",
       visibility: "selected",
@@ -458,7 +436,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
-    orgs.newRepo('inc_lifecycle') {
+    orgs.newRepo('lifecycle') {
       allow_merge_commit: true,
       allow_update_branch: false,
       // TODO: re-enable after some code has been added to the repository
@@ -476,6 +454,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           ],
           required_pull_request+: default_review_rule,
         },
+      ],
+      aliases: [
+        "inc_lifecycle",
       ],
     },
     orgs.newRepo('score-crates') {
@@ -998,6 +979,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       gh_pages_source_path: "/",
       homepage: "https://eclipse-score.github.io/bazel_registry_ui",
       forked_repository:"bazel-contrib/bcr-ui",
+    },
+
+    newInfrastructureTeamRepo('more-disk-space') {
+      description: "GitHub Action to make more disk space available in Ubuntu based GitHub Actions runners",
     },
 
     newInfrastructureTeamRepo('apt-install') {
