@@ -908,6 +908,25 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
+    orgs.newRepo('inc_score_codegen') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_languages+: [
+        "python"
+      ],
+      code_scanning_default_setup_enabled: true,
+      description: "Incubation repository for DSL/code-gen specific to score project",
+      homepage: "https://eclipse-score.github.io/inc_score_codegen",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: default_review_rule,
+        },
+      ],
+    },
+
     newScoreRepo("inc_nlohmann_json", true) {
         description: "Nlohmann JSON Library",
         forked_repository: "nlohmann/json",
