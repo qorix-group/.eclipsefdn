@@ -521,8 +521,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       environments: [
         orgs.newEnvironment('workflow-approval') {
           deployment_branch_policy: "all",
-          reviewers+: [],
-          wait_timer: 0,
+          reviewers+: [
+            "@eclipse-score/automotive-score-committers",
+          ],
+          wait_timer: 1,
         },      
       ],
     },
@@ -703,6 +705,15 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "base libraries including common functionality",
       gh_pages_build_type: "workflow",
       homepage: "https://eclipse-score.github.io/baselibs",
+      environments: [
+        orgs.newEnvironment('workflow-approval') {
+          deployment_branch_policy: "all",
+          reviewers+: [
+            "@eclipse-score/automotive-score-committers",
+          ],
+          wait_timer: 1,
+        },
+      ],
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
@@ -962,8 +973,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       environments: [
         orgs.newEnvironment('workflow-approval') {
           deployment_branch_policy: "all",
-          reviewers+: [],
-          wait_timer: 0,
+          reviewers+: [
+            "@eclipse-score/automotive-score-committers",
+          ],
+          wait_timer: 1,
         },
       ],
       // Override the rulesets
