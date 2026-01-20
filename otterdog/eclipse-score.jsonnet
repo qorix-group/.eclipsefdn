@@ -742,6 +742,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           allows_force_pushes: false,
           requires_linear_history: true,
         },
+        orgs.newRepoRuleset('linear_history') {
+          include_refs+: [
+            "~ALL"
+          ],
+          requires_linear_history: true,
+        },
       ],
     },
     orgs.newRepo('operating_system') {
