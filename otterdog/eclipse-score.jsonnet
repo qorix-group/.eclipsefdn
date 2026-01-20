@@ -742,6 +742,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           allows_force_pushes: false,
           requires_linear_history: true,
         },
+        orgs.newRepoRuleset('linear_history') {
+          include_refs+: [
+            "~ALL"
+          ],
+          requires_linear_history: true,
+        },
       ],
     },
     orgs.newRepo('operating_system') {
@@ -898,6 +904,25 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Orchestration framework & Safe async runtime for Rust",
       gh_pages_build_type: "workflow",
       homepage: "https://eclipse-score.github.io/orchestrator",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: default_review_rule,
+        },
+      ],
+    },
+
+    orgs.newRepo('inc_score_codegen') {
+      allow_merge_commit: true,
+      allow_update_branch: false,
+      code_scanning_default_languages+: [
+        "python"
+      ],
+      code_scanning_default_setup_enabled: true,
+      description: "Incubation repository for DSL/code-gen specific to score project",
+      homepage: "https://eclipse-score.github.io/inc_score_codegen",
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
