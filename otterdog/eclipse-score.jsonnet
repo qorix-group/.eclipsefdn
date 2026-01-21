@@ -95,7 +95,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     description: "",
     discussion_source_repository: "eclipse-score/score",
     has_discussions: true,
-    has_wiki: true,
 },
   teams+: [
     orgs.newTeam('automotive-score-technical-leads') {
@@ -673,6 +672,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       gh_pages_source_branch: "gh-pages",
       gh_pages_source_path: "/",
       has_discussions: true,
+      has_wiki: true,
       homepage: "https://eclipse-score.github.io/score",
       topics+: [
         "score"
