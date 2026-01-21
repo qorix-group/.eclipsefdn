@@ -95,7 +95,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     description: "",
     discussion_source_repository: "eclipse-score/score",
     has_discussions: true,
-  },
+    has_wiki: true,
+},
   teams+: [
     orgs.newTeam('automotive-score-technical-leads') {
       members+: [
