@@ -763,6 +763,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           include_refs+: [
             "~ALL"
           ],
+          bypass_actors+: [
+            "@eclipse-score/codeowner-lola",
+          ],
           requires_linear_history: true,
         },
       ],
