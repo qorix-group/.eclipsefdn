@@ -72,10 +72,15 @@ local newInfrastructureTeamRepo(name, pages = false) = newScoreRepo(name, pages)
   // No special settings for infrastructure team repos at the moment
 };
 
-# Publication to pypi can only be triggered by infrastructure-maintainers and only from main branch
+# Publication to pypi can only be triggered by infrastructure-maintainers and only from main branch or tag
 local pypi_infra_env = orgs.newEnvironment('pypi') {
+  // Note: we cannot use @eclipse-score/infrastructure-maintainers here,
+  // because the team does not have write access, only the members.
   reviewers+: [
-    "@eclipse-score/infrastructure-maintainers",
+    "@AlexanderLanin",
+    "@dcalavrezo-qorix",
+    "@MaximilianSoerenPollak",
+    "@nradakovic",
   ],
   deployment_branch_policy: "selected",
   branch_policies+: [
@@ -1133,6 +1138,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     newModuleRepo('inc_gen_ai') {
       description: "Incubation repository for Generative AI feature",
+    },
+    newModuleRepo('inc_security_crypto') {
+      description: "Incubation repository for Security & Cryptography feature",
     },
     newModuleRepo('kyron') {
       allow_merge_commit: true,
