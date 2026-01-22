@@ -35,7 +35,7 @@ local block_tagging(tags, bypass) =
 // Parameters:
 //   name: The name of the repository.
 //   pages: boolean, whether to create default documentation pages for the repository.
-local newScoreRepo(name, pages) = orgs.newRepo(name) {
+local newScoreRepo(name, pages = false) = orgs.newRepo(name) {
   // These are disabled by default
   dependabot_security_updates_enabled: true,
 
@@ -256,6 +256,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },    
   ],
+  variables+: [
+    orgs.newOrgVariable("ECLIPSE_PROJECT") {
+      value: "automotive.score",
+      visibility: "public", # all repositories have access to this variable
+    },
+  ],
   secrets+: [
     orgs.newOrgSecret('DEVELOCITY_API_TOKEN') {
       value: "pass:bots/automotive.score/develocity.eclipse.org/api-token",
@@ -341,22 +347,18 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
   ],
   _repositories+:: [
-    orgs.newRepo('.github') {
+    newInfrastructureTeamRepo('.github') {
       description: "Houses the organisation README",
+      allow_rebase_merge: true,
+      dependabot_security_updates_enabled: false,
+      has_projects: true,
+      has_wiki: true,
       code_scanning_default_setup_enabled: true,
       code_scanning_default_languages+: [
         "actions",
       ],
       topics+: [
         "score"
-      ],
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: default_review_rule,
-        },
       ],
     },
 
@@ -396,7 +398,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
-    orgs.newRepo('eclipse-score-website') {
+    newScoreRepo('eclipse-score-website') {
+      allow_rebase_merge: true,
+      dependabot_security_updates_enabled: false,
+      has_projects: true,
+      has_wiki: true,
+      rulesets: [], # reset rulesets
       allow_merge_commit: true,
       allow_update_branch: false,
       delete_branch_on_merge: false,
@@ -405,13 +412,23 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         orgs.newEnvironment('pull-request-preview'),
       ],
     },
-    orgs.newRepo('eclipse-score-website-published') {
+    newScoreRepo('eclipse-score-website-published') {
+      allow_rebase_merge: true,
+      dependabot_security_updates_enabled: false,
+      has_projects: true,
+      has_wiki: true,
+      rulesets: [], # reset rulesets
       allow_merge_commit: true,
       allow_update_branch: false,
       delete_branch_on_merge: false,
       dependabot_alerts_enabled: false,
     },
-    orgs.newRepo('eclipse-score-website-preview') {
+    newScoreRepo('eclipse-score-website-preview') {
+      allow_rebase_merge: true,
+      dependabot_security_updates_enabled: false,
+      has_projects: true,
+      has_wiki: true,
+      rulesets: [], # reset rulesets
       allow_merge_commit: true,
       allow_update_branch: false,
       delete_branch_on_merge: false,
