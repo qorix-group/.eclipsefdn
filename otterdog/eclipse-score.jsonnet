@@ -20,7 +20,7 @@ local block_tagging(tags, bypass) =
  orgs.newRepoRuleset('tags-protection') {
   target: "tag",
   # bot has admin access anyway, but let's be explicit
-  bypass_actors+: ["@eclipse-score-bot"] + bypass,
+  bypass_actors+: bypass, # + ["@eclipse-score-bot"] # Bypass_actors cannot be individuals, only role, team, or App: https://otterdog.readthedocs.io/en/latest/reference/organization/repository/bypass-actor/
   include_refs+: [std.format("refs/tags/%s", tag) for tag in tags],
   allows_creations: false,
   allows_deletions: false,
@@ -95,7 +95,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     description: "",
     discussion_source_repository: "eclipse-score/score",
     has_discussions: true,
-  },
+},
   teams+: [
     orgs.newTeam('automotive-score-technical-leads') {
       members+: [
@@ -672,6 +672,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       gh_pages_source_branch: "gh-pages",
       gh_pages_source_path: "/",
       has_discussions: true,
+      has_wiki: true,
       homepage: "https://eclipse-score.github.io/score",
       topics+: [
         "score"
@@ -740,7 +741,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "actions",
         "c-cpp",
         "python",
-        "rust",
+        # "rust", # not yet supported by GH API: https://docs.github.com/en/rest/code-scanning/code-scanning?apiVersion=2022-11-28#update-a-code-scanning-default-setup-configuration
       ],
       code_scanning_default_setup_enabled: true,
       has_discussions: true,
@@ -933,9 +934,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newRepo('inc_score_codegen') {
       allow_merge_commit: true,
       allow_update_branch: false,
-      code_scanning_default_languages+: [
-        "python"
-      ],
+      // code must be present to enable code scanning
+      // code_scanning_default_languages+: [
+      //   "python"
+      // ],
       code_scanning_default_setup_enabled: true,
       description: "Incubation repository for DSL/code-gen specific to score project",
       homepage: "https://eclipse-score.github.io/inc_score_codegen",
