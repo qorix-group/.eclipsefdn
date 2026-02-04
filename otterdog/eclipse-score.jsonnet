@@ -287,6 +287,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "orchestrator",
         "ferrocene_toolchain_builder",
         "lifecycle",
+        "rules_imagefs",
       ],
       value: "********",
       visibility: "selected",
@@ -306,6 +307,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "orchestrator",
         "ferrocene_toolchain_builder",
         "lifecycle",
+        "rules_imagefs",
       ],
       value: "********",
       visibility: "selected",
@@ -325,6 +327,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "orchestrator",
         "ferrocene_toolchain_builder",
         "lifecycle",
+        "rules_imagefs",
       ],
       value: "********",
       visibility: "selected",
@@ -814,6 +817,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           required_pull_request+: default_review_rule,
         },
       ],
+    },
+    newScoreRepo('rules_imagefs', false) {
+      description: "Repository for Image FileSystem Bazel rules and toolchains definitions",
     },
     newScoreRepo('bazel_cpp_toolchains', false) {
       description: "Bazel C/C++ toolchain configuration repository",
