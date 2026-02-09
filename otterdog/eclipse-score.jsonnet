@@ -1055,22 +1055,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "S-CORE fork of bazelbuild/rules_rust",
       forked_repository: "bazelbuild/rules_rust",
       default_branch: "main",
-      allow_rebase_merge: true,
-      allow_merge_commit: true,
-      has_discussions: true,
-      has_wiki: true,
-      dependabot_alerts_enabled: true,
-      dependabot_security_updates_enabled: false,
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: default_review_rule,
-          allows_force_pushes: false,
-          requires_linear_history: true,
-        },
-      ],
     },
 
     newInfrastructureTeamRepo('more-disk-space') {
