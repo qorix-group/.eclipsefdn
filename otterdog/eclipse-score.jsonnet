@@ -1060,6 +1060,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       forked_repository:"bazel-contrib/bcr-ui",
     },
 
+    newInfrastructureTeamRepo("rules_rust") {
+      description: "S-CORE fork of bazelbuild/rules_rust",
+      forked_repository: "bazelbuild/rules_rust",
+      default_branch: "main",
+    },
+
     newInfrastructureTeamRepo('more-disk-space') {
       description: "GitHub Action to make more disk space available in Ubuntu based GitHub Actions runners",
     },
