@@ -1053,6 +1053,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
     newInfrastructureTeamRepo('bazel_registry_ui') {
       description: "House the ui for bazel_registry in Score",
+      rulesets: [], # reset rulesets
       gh_pages_build_type: "legacy",
       gh_pages_source_branch: "gh-pages",
       gh_pages_source_path: "/",
