@@ -1108,6 +1108,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       template_repository: "eclipse-score/module_template",
     },
 
+    newInfrastructureTeamRepo('infrastructure', true) {
+      description: "All general information related to the development and integration infrastructure",
+    },
+
     orgs.newRepo('testing_tools') {
       allow_merge_commit: true,
       allow_update_branch: false,
