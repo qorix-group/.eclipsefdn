@@ -1064,7 +1064,15 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     newInfrastructureTeamRepo("rules_rust") {
       description: "S-CORE fork of bazelbuild/rules_rust",
       forked_repository: "bazelbuild/rules_rust",
-      default_branch: "main",
+      default_branch: "score_main",
+      rulesets+: [
+        orgs.newRepoRuleset('score_main') {
+          include_refs+: [
+            "refs/heads/score_main"
+          ],
+          required_pull_request+: default_review_rule,
+        },
+      ],
     },
 
     newInfrastructureTeamRepo('more-disk-space') {
