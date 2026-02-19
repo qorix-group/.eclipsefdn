@@ -1149,6 +1149,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Repository for clang-tidy based static code checker",
     },
     newModuleRepo('logging') {
+      allow_rebase_merge: true,
       description: "Repository for logging daemon",
       rulesets: [
         orgs.newRepoRuleset('main') {
