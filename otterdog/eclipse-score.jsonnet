@@ -787,6 +787,20 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           ],
           requires_linear_history: true,
         },
+        orgs.newRepoRuleset('release_creation_by_codeowners_only') {
+          name: "Restrict Release Creation to Code Owners",
+          target: "tag",
+          enforcement: "active",
+          bypass_actors+: [
+            "@eclipse-score/codeowner-lola",
+          ],
+          include_refs+: [
+            "refs/tags/*",
+          ],
+          allows_creations: false,
+          allows_deletions: false,
+          allows_updates: false,
+        },
       ],
       environments: [
         orgs.newEnvironment('workflow-approval') {
