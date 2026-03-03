@@ -1065,6 +1065,19 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
+    newInfrastructureTeamRepo('score_cpp_policies') {
+      description: "Centralized C++ quality tool policies for S-CORE, including sanitizer configurations and safety-critical guidelines.",
+      gh_pages_build_type: "workflow",
+      homepage: "https://eclipse-score.github.io/score_cpp_policies",
+      topics+: [
+        "cpp",
+        "sanitizers",
+        "clang-tidy",
+        "policy",
+        "score",
+      ],
+    },
+
     newInfrastructureTeamRepo('bazel_registry_ui') {
       description: "House the ui for bazel_registry in Score",
       rulesets: [], # reset rulesets
