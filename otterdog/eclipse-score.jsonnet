@@ -713,6 +713,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         pypi_infra_env,
       ],
     },
+    newInfrastructureTeamRepo('sbom-tool') {
+      description: "Home of the SBOM generation tool",
+      environments+: [
+        orgs.newEnvironment('copilot'),
+      ],
+    },
 
     newDependableElementRepo('baselibs') {
       description: "base libraries including common functionality",
