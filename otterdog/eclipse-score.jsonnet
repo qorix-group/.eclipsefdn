@@ -1204,6 +1204,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         orgs.newBranchProtectionRule('main') {
           requires_status_checks: true,
           requires_strict_status_checks: true,
+          requires_linear_history: true,
         },
       ],
       rulesets: [
@@ -1211,7 +1212,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             include_refs+: [
               "refs/heads/main"
             ],
-            required_pull_request+: default_review_rule,
+            required_pull_request: default_review_rule,
             allows_force_pushes: false,
             requires_linear_history: true,
           },
