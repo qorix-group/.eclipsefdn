@@ -1196,7 +1196,22 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Safe async runtime for Rust",
 
       # Deviations from standard dependable element repository settings:
-      allow_merge_commit: true,
+      allow_merge_commit: false,
+      allow_rebase_merge: true,
+      allow_squash_merge: true,
+      allow_update_branch: true,
+      rulesets: [
+          orgs.newRepoRuleset('main') {
+            include_refs+: [
+              "refs/heads/main"
+            ],
+            required_pull_request+: default_review_rule,
+            allows_force_pushes: false,
+            requires_linear_history: true,
+            requires_status_checks: true,
+            requires_strict_status_checks: true,
+          },
+        ],
     },
     newDependableElementRepo('inc_time') {
       description: "incubation repo for time sync module",
