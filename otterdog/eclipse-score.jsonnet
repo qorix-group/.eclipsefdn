@@ -16,6 +16,16 @@ local default_review_rule = {
   # requires_last_push_approval: true,
 };
 
+local main_branch_protection_rule = orgs.newBranchProtectionRule('main') {
+  # Enforce branch is up-to-date before merging
+  requires_status_checks: true,
+  requires_strict_status_checks: true,
+  # Restrict merge commits
+  requires_linear_history: true,
+  # Match the default_review_rule, otherwise it is overwritten with 2
+  required_approving_review_count: 1,
+};
+
 local block_tagging(tags, bypass) =
  orgs.newRepoRuleset('tags-protection') {
   target: "tag",
@@ -461,8 +471,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
       # Deviations from standard dependable element repository settings:
       template_repository: null,
-      allow_merge_commit: true,
-      allow_update_branch: false,
+      allow_update_branch: true,
       allow_rebase_merge: true,
       dependabot_security_updates_enabled: false,
       has_projects: true,
@@ -471,6 +480,20 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       code_scanning_default_languages+: [
         "actions",
       ],
+      branch_protection_rules: [
+        main_branch_protection_rule
+      ],
+      rulesets: [
+          orgs.newRepoRuleset('main') {
+            include_refs+: [
+              "refs/heads/main"
+            ],
+            required_pull_request+: default_review_rule,
+            allows_force_pushes: false,
+            requires_linear_history: true,
+          },
+        ],
+
     },
     orgs.newRepo('score-crates') {
       allow_merge_commit: true,
@@ -532,8 +555,21 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
       # Deviations from standard dependable element repository settings:
       template_repository: null,
-      allow_merge_commit: true,
-      allow_update_branch: false,
+      allow_rebase_merge: true,
+      allow_update_branch: true,
+      branch_protection_rules: [
+        main_branch_protection_rule
+      ],
+      rulesets: [
+          orgs.newRepoRuleset('main') {
+            include_refs+: [
+              "refs/heads/main"
+            ],
+            required_pull_request+: default_review_rule,
+            allows_force_pushes: false,
+            requires_linear_history: true,
+          },
+        ],
     },
     orgs.newRepo('inc_process_test_management') {
       allow_merge_commit: true,
@@ -664,6 +700,22 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         "integration",
       ],
       environments+: qnx_environments,
+      # Deviations from standard dependable element repository settings:
+      allow_rebase_merge: true,
+      allow_update_branch: true,
+      branch_protection_rules: [
+        main_branch_protection_rule
+      ],
+      rulesets: [
+          orgs.newRepoRuleset('main') {
+            include_refs+: [
+              "refs/heads/main"
+            ],
+            required_pull_request+: default_review_rule,
+            allows_force_pushes: false,
+            requires_linear_history: true,
+          },
+        ],
     },
 
     newScoreRepo('os_images', false) {
@@ -968,13 +1020,25 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       has_projects: true,
       has_wiki: true,
       template_repository: null,
-      allow_merge_commit: true,
-      allow_update_branch: false,
+      allow_update_branch: true,
       code_scanning_default_setup_enabled: true,
       code_scanning_default_languages+: [
         "actions",
         "python",
       ],
+      branch_protection_rules: [
+        main_branch_protection_rule
+      ],
+      rulesets: [
+          orgs.newRepoRuleset('main') {
+            include_refs+: [
+              "refs/heads/main"
+            ],
+            required_pull_request+: default_review_rule,
+            allows_force_pushes: false,
+            requires_linear_history: true,
+          },
+        ],
     },
 
     orgs.newRepo('inc_score_codegen') {
@@ -1026,8 +1090,11 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Repository for the Rust baselibs",
 
       # Deviations from standard dependable element repository settings:
-      allow_merge_commit: true,
-      allow_update_branch: false,
+      allow_update_branch: true,
+      allow_rebase_merge: true,
+      branch_protection_rules: [
+        main_branch_protection_rule
+      ],
       // Override the rulesets
       rulesets: [
         orgs.newRepoRuleset('main') {
@@ -1038,6 +1105,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             "@eclipse-score/codeowner-baselibs_rust",
           ],
           required_pull_request+: default_review_rule,
+          allows_force_pushes: false,
+          requires_linear_history: true,
         },
       ],
     },
@@ -1169,6 +1238,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
       # Deviations from standard dependable element repository settings:
       allow_rebase_merge: true,
+      allow_update_branch: true,
+      branch_protection_rules: [
+        main_branch_protection_rule
+      ],
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
@@ -1208,24 +1281,17 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Safe async runtime for Rust",
 
       # Deviations from standard dependable element repository settings:
-      allow_merge_commit: false,
       allow_rebase_merge: true,
-      allow_squash_merge: true,
       allow_update_branch: true,
       branch_protection_rules: [
-        orgs.newBranchProtectionRule('main') {
-          requires_status_checks: true,
-          requires_strict_status_checks: true,
-          requires_linear_history: true,
-          required_approving_review_count: 1,
-        },
+        main_branch_protection_rule
       ],
       rulesets: [
           orgs.newRepoRuleset('main') {
             include_refs+: [
               "refs/heads/main"
             ],
-            required_pull_request: default_review_rule,
+            required_pull_request+: default_review_rule,
             allows_force_pushes: false,
             requires_linear_history: true,
           },
