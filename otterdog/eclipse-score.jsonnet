@@ -802,6 +802,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       allow_merge_commit: true,
       allow_update_branch: false,
       code_scanning_default_setup_enabled: true,
+      archived: true,
       description: "Repository for the module operating system",
       rulesets: [
         orgs.newRepoRuleset('main') {
