@@ -1259,6 +1259,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     newDependableElementRepo('scrample') {
       description: "Repository for example component",
     },
+    newScoreRepo('dev_playground') {
+      description: "Repository for developer tools and playground",
+    },
     newDependableElementRepo('inc_abi_compatible_datatypes') {
       description: "Incubation repository for ABI compatible data types feature",
     },
