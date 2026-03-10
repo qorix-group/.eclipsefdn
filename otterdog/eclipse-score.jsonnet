@@ -105,9 +105,22 @@ local newDependableElementRepo(name) = newScoreRepo(name, true) {
   environments+: qnx_environments,
 };
 
-local newInfrastructureTeamRepo(name, pages = false) = newScoreRepo(name, pages) {
-  // No special settings for infrastructure team repos at the moment
-};
+# Repositories owned or maintained by the infrastructure community should use this helper.
+# Parameters:
+#   name:        Name of the repository.
+#   pages:       Boolean, whether to enable GitHub Pages defaults (see newScoreRepo).
+#   subcategory: Optional string to refine the "category" custom property.
+#                When null, the category is set to "infrastructure".
+#                When non-null, the category is set to "infrastructure.<subcategory>".
+#                Use short, identifier-like values (no spaces), e.g. "ci", "tooling", "secrets".
+local newInfrastructureTeamRepo(name, pages = false, subcategory = null) =
+  local cat = if subcategory != null then "infrastructure." + subcategory else "infrastructure";
+
+  newScoreRepo(name, pages) {
+    custom_properties: {
+      category: cat,
+    }
+  };
 
 # Publication to pypi can only be triggered by infrastructure-maintainers and only from main branch or tag
 local pypi_infra_env = orgs.newEnvironment('pypi') {
@@ -132,7 +145,17 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     description: "",
     discussion_source_repository: "eclipse-score/score",
     has_discussions: true,
-},
+
+    custom_properties+: [
+      # This is used to categorize repositories for the auto-generated organization README file.
+      # The value is expected to be in the format "category.subcategory", but this is not enforced.
+      # The subcategory is optional and can be used to further categorize repositories. For example, "infrastructure.bazel" or "modules.communication".
+      orgs.newCustomProperty('category') {
+        description: "Category used to group repositories in the auto-generated organization README file",
+        value_type: "string",
+      }
+    ]
+  },
   teams+: [
     orgs.newTeam('automotive-score-technical-leads') {
       members+: [
@@ -357,7 +380,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
-    newInfrastructureTeamRepo('bazel_registry') {
+    newInfrastructureTeamRepo('bazel_registry', subcategory = "tooling") {
       description: "Score project bazel modules registry",
       topics+: [
         "bazel",
@@ -658,7 +681,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
-    newInfrastructureTeamRepo('reference_integration', true) {
+    newInfrastructureTeamRepo('reference_integration', true, subcategory = "integration") {
       description: "Score project integration repository",
       topics+: [
         "integration",
@@ -666,7 +689,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       environments+: qnx_environments,
     },
 
-    newScoreRepo('os_images', false) {
+    newInfrastructureTeamRepo('os_images', false, subcategory = "integration") {
       description: "OS Images for testing and deliveries",
     },
 
@@ -942,8 +965,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       is_template: true,
     },
 
-    newInfrastructureTeamRepo('cicd-workflows') {
-      description: "Reusable GitHub Actions workflows for CI/CD automation",
+    newInfrastructureTeamRepo('cicd-actions', subcategory = "automation") {
+      description: "Reusable GitHub Actions for CI/CD automation",
+    },
+
+    newInfrastructureTeamRepo('cicd-workflows', subcategory = "automation") {
+      description: "Reusable GitHub Workflows for CI/CD automation",
     },
 
     newInfrastructureTeamRepo('docs-as-code', pages = true) {
@@ -1091,11 +1118,11 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
-    newInfrastructureTeamRepo('more-disk-space') {
+    newInfrastructureTeamRepo('more-disk-space', subcategory = "automation") {
       description: "GitHub Action to make more disk space available in Ubuntu based GitHub Actions runners",
     },
 
-    newInfrastructureTeamRepo('apt-install') {
+    newInfrastructureTeamRepo('apt-install', subcategory = "automation") {
       description: "GitHub Action to execute apt-install in a clever way",
     },
 
