@@ -1308,7 +1308,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Incubation repository for ABI compatible data types feature",
     },
     newDependableElementRepo('inc_someip_gateway') {
-      archived: true,
       description: "Incubation repository for SOME/IP gateway feature",
     },
     newDependableElementRepo('inc_diagnostics') {
