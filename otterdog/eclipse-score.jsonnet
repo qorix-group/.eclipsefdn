@@ -78,21 +78,22 @@ local newScoreRepo(name, pages = false) = orgs.newRepo(name) {
 # That's not ideal, as any workflow, regardless of environment approval can access the secrets, but it's the best we can do for now.
 # Issue: https://github.com/eclipse-csi/otterdog/issues/537
 local qnx_enabled_repos = [
-    "toolchains_qnx",
-    "persistency",
-    "baselibs",
     "baselibs_rust",
-    "communication",
-    "logging",
-    "reference_integration",
-    "scrample",
+    "baselibs",
     "bazel_cpp_toolchains",
-    "kyron",
-    "orchestrator",
+    "communication",
     "ferrocene_toolchain_builder",
-    "lifecycle",
-    "rules_imagefs",
+    "inc_someip_gateway",
     "itf",
+    "kyron",
+    "lifecycle",
+    "logging",
+    "orchestrator",
+    "persistency",
+    "reference_integration",
+    "rules_imagefs",
+    "scrample",
+    "toolchains_qnx",
 ];
 
 
