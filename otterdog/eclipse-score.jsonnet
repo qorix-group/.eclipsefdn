@@ -16,6 +16,16 @@ local default_review_rule = {
   # requires_last_push_approval: true,
 };
 
+local main_branch_protection_rule = orgs.newBranchProtectionRule('main') {
+  # Enforce branch is up-to-date before merging
+  requires_status_checks: true,
+  requires_strict_status_checks: true,
+  # Restrict merge commits
+  requires_linear_history: true,
+  # Match the default_review_rule, otherwise it is overwritten with 2
+  required_approving_review_count: 1,
+};
+
 local block_tagging(tags, bypass) =
  orgs.newRepoRuleset('tags-protection') {
   target: "tag",
@@ -68,21 +78,22 @@ local newScoreRepo(name, pages = false) = orgs.newRepo(name) {
 # That's not ideal, as any workflow, regardless of environment approval can access the secrets, but it's the best we can do for now.
 # Issue: https://github.com/eclipse-csi/otterdog/issues/537
 local qnx_enabled_repos = [
-    "toolchains_qnx",
-    "persistency",
-    "baselibs",
     "baselibs_rust",
-    "communication",
-    "logging",
-    "reference_integration",
-    "scrample",
+    "baselibs",
     "bazel_cpp_toolchains",
-    "kyron",
-    "orchestrator",
+    "communication",
     "ferrocene_toolchain_builder",
-    "lifecycle",
-    "rules_imagefs",
+    "inc_someip_gateway",
     "itf",
+    "kyron",
+    "lifecycle",
+    "logging",
+    "orchestrator",
+    "persistency",
+    "reference_integration",
+    "rules_imagefs",
+    "scrample",
+    "toolchains_qnx",
 ];
 
 
@@ -105,9 +116,22 @@ local newDependableElementRepo(name) = newScoreRepo(name, true) {
   environments+: qnx_environments,
 };
 
-local newInfrastructureTeamRepo(name, pages = false) = newScoreRepo(name, pages) {
-  // No special settings for infrastructure team repos at the moment
-};
+# Repositories owned or maintained by the infrastructure community should use this helper.
+# Parameters:
+#   name:        Name of the repository.
+#   pages:       Boolean, whether to enable GitHub Pages defaults (see newScoreRepo).
+#   subcategory: Optional string to refine the "category" custom property.
+#                When null, the category is set to "infrastructure".
+#                When non-null, the category is set to "infrastructure.<subcategory>".
+#                Use short, identifier-like values (no spaces), e.g. "ci", "tooling", "secrets".
+local newInfrastructureTeamRepo(name, pages = false, subcategory = null) =
+  local cat = if subcategory != null then "infrastructure." + subcategory else "infrastructure";
+
+  newScoreRepo(name, pages) {
+    custom_properties: {
+      category: cat,
+    }
+  };
 
 # Publication to pypi can only be triggered by infrastructure-maintainers and only from main branch or tag
 local pypi_infra_env = orgs.newEnvironment('pypi') {
@@ -132,7 +156,17 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     description: "",
     discussion_source_repository: "eclipse-score/score",
     has_discussions: true,
-},
+
+    custom_properties+: [
+      # This is used to categorize repositories for the auto-generated organization README file.
+      # The value is expected to be in the format "category.subcategory", but this is not enforced.
+      # The subcategory is optional and can be used to further categorize repositories. For example, "infrastructure.bazel" or "modules.communication".
+      orgs.newCustomProperty('category') {
+        description: "Category used to group repositories in the auto-generated organization README file",
+        value_type: "string",
+      }
+    ]
+  },
   teams+: [
     orgs.newTeam('automotive-score-technical-leads') {
       members+: [
@@ -357,7 +391,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
-    newInfrastructureTeamRepo('bazel_registry') {
+    newInfrastructureTeamRepo('bazel_registry', subcategory = "tooling") {
       description: "Score project bazel modules registry",
       topics+: [
         "bazel",
@@ -462,8 +496,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
       # Deviations from standard dependable element repository settings:
       template_repository: null,
-      allow_merge_commit: true,
-      allow_update_branch: false,
+      allow_update_branch: true,
       allow_rebase_merge: true,
       dependabot_security_updates_enabled: false,
       has_projects: true,
@@ -472,6 +505,20 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       code_scanning_default_languages+: [
         "actions",
       ],
+      branch_protection_rules: [
+        main_branch_protection_rule
+      ],
+      rulesets: [
+          orgs.newRepoRuleset('main') {
+            include_refs+: [
+              "refs/heads/main"
+            ],
+            required_pull_request+: default_review_rule,
+            allows_force_pushes: false,
+            requires_linear_history: true,
+          },
+        ],
+
     },
     orgs.newRepo('score-crates') {
       allow_merge_commit: true,
@@ -535,8 +582,21 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
       # Deviations from standard dependable element repository settings:
       template_repository: null,
-      allow_merge_commit: true,
-      allow_update_branch: false,
+      allow_rebase_merge: true,
+      allow_update_branch: true,
+      branch_protection_rules: [
+        main_branch_protection_rule
+      ],
+      rulesets: [
+          orgs.newRepoRuleset('main') {
+            include_refs+: [
+              "refs/heads/main"
+            ],
+            required_pull_request+: default_review_rule,
+            allows_force_pushes: false,
+            requires_linear_history: true,
+          },
+        ],
     },
     orgs.newRepo('inc_process_test_management') {
       allow_merge_commit: true,
@@ -663,15 +723,31 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
-    newInfrastructureTeamRepo('reference_integration', true) {
+    newInfrastructureTeamRepo('reference_integration', true, subcategory = "integration") {
       description: "Score project integration repository",
       topics+: [
         "integration",
       ],
       environments+: qnx_environments,
+      # Deviations from standard dependable element repository settings:
+      allow_rebase_merge: true,
+      allow_update_branch: true,
+      branch_protection_rules: [
+        main_branch_protection_rule
+      ],
+      rulesets: [
+          orgs.newRepoRuleset('main') {
+            include_refs+: [
+              "refs/heads/main"
+            ],
+            required_pull_request+: default_review_rule,
+            allows_force_pushes: false,
+            requires_linear_history: true,
+          },
+        ],
     },
 
-    newScoreRepo('os_images', false) {
+    newInfrastructureTeamRepo('os_images', false, subcategory = "integration") {
       description: "OS Images for testing and deliveries",
     },
 
@@ -949,8 +1025,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       is_template: true,
     },
 
-    newInfrastructureTeamRepo('cicd-workflows') {
-      description: "Reusable GitHub Actions workflows for CI/CD automation",
+    newInfrastructureTeamRepo('cicd-actions', subcategory = "automation") {
+      description: "Reusable GitHub Actions for CI/CD automation",
+    },
+
+    newInfrastructureTeamRepo('cicd-workflows', subcategory = "automation") {
+      description: "Reusable GitHub Workflows for CI/CD automation",
     },
 
     newInfrastructureTeamRepo('docs-as-code', pages = true) {
@@ -975,13 +1055,25 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       has_projects: true,
       has_wiki: true,
       template_repository: null,
-      allow_merge_commit: true,
-      allow_update_branch: false,
+      allow_update_branch: true,
       code_scanning_default_setup_enabled: true,
       code_scanning_default_languages+: [
         "actions",
         "python",
       ],
+      branch_protection_rules: [
+        main_branch_protection_rule
+      ],
+      rulesets: [
+          orgs.newRepoRuleset('main') {
+            include_refs+: [
+              "refs/heads/main"
+            ],
+            required_pull_request+: default_review_rule,
+            allows_force_pushes: false,
+            requires_linear_history: true,
+          },
+        ],
     },
 
     orgs.newRepo('inc_score_codegen') {
@@ -1034,8 +1126,11 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Repository for the Rust baselibs",
 
       # Deviations from standard dependable element repository settings:
-      allow_merge_commit: true,
-      allow_update_branch: false,
+      allow_update_branch: true,
+      allow_rebase_merge: true,
+      branch_protection_rules: [
+        main_branch_protection_rule
+      ],
       // Override the rulesets
       rulesets: [
         orgs.newRepoRuleset('main') {
@@ -1046,6 +1141,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             "@eclipse-score/codeowner-baselibs_rust",
           ],
           required_pull_request+: default_review_rule,
+          allows_force_pushes: false,
+          requires_linear_history: true,
         },
       ],
     },
@@ -1099,11 +1196,11 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
-    newInfrastructureTeamRepo('more-disk-space') {
+    newInfrastructureTeamRepo('more-disk-space', subcategory = "automation") {
       description: "GitHub Action to make more disk space available in Ubuntu based GitHub Actions runners",
     },
 
-    newInfrastructureTeamRepo('apt-install') {
+    newInfrastructureTeamRepo('apt-install', subcategory = "automation") {
       description: "GitHub Action to execute apt-install in a clever way",
     },
 
@@ -1182,6 +1279,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
       # Deviations from standard dependable element repository settings:
       allow_rebase_merge: true,
+      allow_update_branch: true,
+      branch_protection_rules: [
+        main_branch_protection_rule
+      ],
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
@@ -1198,6 +1299,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     newDependableElementRepo('scrample') {
       description: "Repository for example component",
+    },
+    newScoreRepo('dev_playground') {
+      description: "Repository for developer tools and playground",
     },
     newDependableElementRepo('inc_abi_compatible_datatypes') {
       archived: true,
@@ -1226,24 +1330,17 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Safe async runtime for Rust",
 
       # Deviations from standard dependable element repository settings:
-      allow_merge_commit: false,
       allow_rebase_merge: true,
-      allow_squash_merge: true,
       allow_update_branch: true,
       branch_protection_rules: [
-        orgs.newBranchProtectionRule('main') {
-          requires_status_checks: true,
-          requires_strict_status_checks: true,
-          requires_linear_history: true,
-          required_approving_review_count: 1,
-        },
+        main_branch_protection_rule
       ],
       rulesets: [
           orgs.newRepoRuleset('main') {
             include_refs+: [
               "refs/heads/main"
             ],
-            required_pull_request: default_review_rule,
+            required_pull_request+: default_review_rule,
             allows_force_pushes: false,
             requires_linear_history: true,
           },
