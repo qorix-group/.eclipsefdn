@@ -438,6 +438,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newRepo('inc_feo') {
       allow_merge_commit: true,
       allow_update_branch: false,
+      archived: true,
       code_scanning_default_setup_enabled: true,
       code_scanning_default_languages+: [
         "actions",
@@ -494,6 +495,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newRepo('inc_mw_com') {
       allow_merge_commit: true,
       allow_update_branch: false,
+      archived: true,
       code_scanning_default_languages+: [
         "python"
       ],
@@ -512,6 +514,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newRepo('inc_mw_log') {
       allow_merge_commit: true,
       allow_update_branch: false,
+      archived: true,
       code_scanning_default_setup_enabled: true,
       description: "Incubation repository for logging framework",
       homepage: "https://eclipse-score.github.io/inc_mw_log",
@@ -538,6 +541,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newRepo('inc_process_test_management') {
       allow_merge_commit: true,
       allow_update_branch: false,
+      archived: true,
       code_scanning_default_setup_enabled: true,
       description: "Incubation repository for Process - Sphinx-Test management",
       homepage: "https://eclipse-score.github.io/inc_process_test_management",
@@ -557,6 +561,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newRepo('inc_process_variant_management') {
       allow_merge_commit: true,
       allow_update_branch: false,
+      archived: true,
       code_scanning_default_setup_enabled: true,
       description: "Incubation repository for Process - Sphinx-Variant management",
       homepage: "https://eclipse-score.github.io/inc_process_variant_management",
@@ -836,6 +841,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newRepo('examples') {
       allow_merge_commit: true,
       allow_update_branch: false,
+      archived: true,
       code_scanning_default_setup_enabled: true,
       description: "Hosts templates and examples for score tools and workflows",
       homepage: "https://eclipse-score.github.io/examples",
@@ -981,6 +987,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     orgs.newRepo('inc_score_codegen') {
       allow_merge_commit: true,
       allow_update_branch: false,
+      archived: true,
       // code must be present to enable code scanning
       // code_scanning_default_languages+: [
       //   "python"
@@ -1112,15 +1119,18 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
 
     newInfrastructureTeamRepo('test_integration') {
+      archived: true,
       description: "Tests for the integration infrastructure",
     },
 
     newInfrastructureTeamRepo('test_module_a') {
+      archived: true,
       description: "Dummy module for testing the integration infrastructure",
       template_repository: "eclipse-score/module_template",
     },
 
     newInfrastructureTeamRepo('test_module_b') {
+      archived: true,
       description: "Dummy module for testing the integration infrastructure",
       template_repository: "eclipse-score/module_template",
     },
@@ -1145,6 +1155,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
 
     newDependableElementRepo('inc_json') {
+      archived: true,
       description: "Incubation repository for JSON module",
     },
     newDependableElementRepo('feo') {
@@ -1160,6 +1171,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Repository for python static code checker",
     },
     newDependableElementRepo('inc_config_management') {
+      archived: true,
       description: "Incubation repository for config management",
     },
     newDependableElementRepo('bazel-tools-cc') {
@@ -1188,21 +1200,26 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Repository for example component",
     },
     newDependableElementRepo('inc_abi_compatible_datatypes') {
+      archived: true,
       description: "Incubation repository for ABI compatible data types feature",
     },
     newDependableElementRepo('inc_someip_gateway') {
       description: "Incubation repository for SOME/IP gateway feature",
     },
     newDependableElementRepo('inc_diagnostics') {
+      archived: true,
       description: "Incubation repository for diagnostics feature",
     },
     newDependableElementRepo('inc_ai_platform') {
+      archived: true,
       description: "Incubation repository for AI platform feature",
     },
     newDependableElementRepo('inc_gen_ai') {
+      archived: true,
       description: "Incubation repository for Generative AI feature",
     },
     newDependableElementRepo('inc_security_crypto') {
+      archived: true,
       description: "Incubation repository for Security & Cryptography feature",
     },
     newDependableElementRepo('kyron') {
