@@ -837,7 +837,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       homepage: null,
       dependabot_security_updates_enabled: false,
       allow_rebase_merge: true,
-      allow_merge_commit: false,
+      allow_merge_commit: true,
       allow_update_branch: true,
       code_scanning_default_languages+: [
         "actions",
@@ -857,16 +857,18 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             "@eclipse-score/codeowner-lola",
           ],
           allows_force_pushes: false,
-          requires_linear_history: true,
-        },
-        orgs.newRepoRuleset('linear_history') {
-          include_refs+: [
-            "~ALL"
-          ],
-          bypass_actors+: [
-            "@eclipse-score/codeowner-lola",
-          ],
-          requires_linear_history: true,
+          required_status_checks+: {
+            status_checks+: [
+              "build_and_test_host",
+              "build_and_test_qnx",
+              "coverage_report",
+              "build_and_test_asan_ubsan_lsan",
+              "build_and_test_tsan",
+            ],
+          },
+          required_merge_queue: orgs.newMergeQueue() {
+            merge_method: "MERGE",
+          },
         },
         block_tagging(
           [
