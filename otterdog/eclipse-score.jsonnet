@@ -1205,7 +1205,26 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
 
     newInfrastructureTeamRepo('devcontainer') {
-      description: "Common Devcontainer for Eclipse S-CORE",
+      description: "Common DevContainer for Eclipse S-CORE",
+      delete_branch_on_merge: true,
+      squash_merge_commit_title: "PR_TITLE",
+      squash_merge_commit_message: "PR_BODY",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "~DEFAULT_BRANCH"
+          ],
+          required_pull_request+: default_review_rule,
+          required_status_checks+: {
+            status_checks+: [
+              "build/overall-result",
+            ],
+          },
+          required_merge_queue: orgs.newMergeQueue() {
+            merge_method: "SQUASH",
+          },
+        },
+      ],
     },
 
     newInfrastructureTeamRepo('dash-license-scan') {
