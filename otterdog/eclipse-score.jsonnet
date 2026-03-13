@@ -854,7 +854,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           ],
           required_pull_request+: default_review_rule,
           bypass_actors+: [
-            "@eclipse-score/codeowner-lola",
+            "@eclipse-score/codeowner-lola:pull_request",
           ],
           allows_force_pushes: false,
           required_status_checks+: {
