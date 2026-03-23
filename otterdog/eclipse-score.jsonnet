@@ -744,6 +744,26 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             allows_force_pushes: false,
             requires_linear_history: true,
           },
+          orgs.newRepoRuleset('release') {
+            include_refs+: [
+              "refs/heads/release/**/*"
+            ],
+            allows_force_pushes: false,
+          },
+          orgs.newRepoRuleset('releases') {
+            include_refs+: [
+              "refs/heads/releases/**/*"
+            ],
+            required_pull_request+: default_review_rule,
+            allows_creations: true,
+            allows_force_pushes: false,
+            requires_linear_history: true,
+            required_status_checks+: {
+            status_checks+: [
+                "check-approvals",
+              ],
+            },
+          },
         ],
     },
 
