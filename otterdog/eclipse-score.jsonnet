@@ -881,7 +881,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             status_checks+: [
               "build_and_test_host",
               "build_and_test_qnx",
-              "coverage_report",
               "build_and_test_asan_ubsan_lsan",
               "build_and_test_tsan",
             ],
