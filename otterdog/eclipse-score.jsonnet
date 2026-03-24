@@ -868,7 +868,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           },
           required_merge_queue: orgs.newMergeQueue() {
             merge_method: "MERGE",
-            status_check_timeout: 60,
+            status_check_timeout: 120,
           },
         },
         block_tagging(
