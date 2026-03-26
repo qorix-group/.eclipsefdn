@@ -45,34 +45,48 @@ local block_tagging(tags, bypass) =
 // Parameters:
 //   name: The name of the repository.
 //   pages: boolean, whether to create default documentation pages for the repository.
-local newScoreRepo(name, pages = false) = orgs.newRepo(name) {
-  // These are disabled by default
-  dependabot_security_updates_enabled: true,
+//   category: Optional string stored as a "category" custom property, used for grouping repositories in the auto-generated organization README file.
+//   subcategory: Optional string stored as a "subcategory" custom property, used for further grouping within a category.
+local newScoreRepo(name, pages = false, category = null, subcategory = null) =
+  local cat = if category != null && subcategory != null then {
+      category: category,
+      subcategory: subcategory
+    } else if category != null then {
+      category: category,
+    } else if subcategory != null then
+      error "Subcategory requires a category. Repository: " + name
+    else {};
 
-  // Default: Squash only.
-  // More details: https://eclipse-score.github.io/score/main/contribute/general/git.html
-  allow_rebase_merge: false,
-  allow_merge_commit: false,
-  allow_squash_merge: true,
+  orgs.newRepo(name) {
+    // These are disabled by default
+    dependabot_security_updates_enabled: true,
 
-  // Remove some features, to avoid having too many options where stuff is located
-  has_discussions: false,
-  has_projects: false,
-  has_wiki: false,
+    // Default: Squash only.
+    // More details: https://eclipse-score.github.io/score/main/contribute/general/git.html
+    allow_rebase_merge: false,
+    allow_merge_commit: false,
+    allow_squash_merge: true,
 
-  // Setup the default review rule for main branch.
-  rulesets: [
-    orgs.newRepoRuleset('main') {
-      include_refs+: [
-        "refs/heads/main"
-      ],
-      required_pull_request+: default_review_rule,
-    },
-  ],
-} + if pages then {
-  gh_pages_build_type: "workflow",
-  homepage: "https://eclipse-score.github.io/" + name,
-} else {};
+    // Remove some features, to avoid having too many options where stuff is located
+    has_discussions: false,
+    has_projects: false,
+    has_wiki: false,
+
+    // Setup the default review rule for main branch.
+    rulesets: [
+      orgs.newRepoRuleset('main') {
+        include_refs+: [
+          "refs/heads/main"
+        ],
+        required_pull_request+: default_review_rule,
+      },
+    ],
+
+    custom_properties+: cat,
+  } + if pages then {
+    gh_pages_build_type: "workflow",
+    homepage: "https://eclipse-score.github.io/" + name,
+  } else {};
 
 # As Otterdog does not support environment secrets yet, we need to specify the repositories that should have access to the QNX secrets here.
 # That's not ideal, as any workflow, regardless of environment approval can access the secrets, but it's the best we can do for now.
@@ -120,18 +134,13 @@ local newDependableElementRepo(name) = newScoreRepo(name, true) {
 # Parameters:
 #   name:        Name of the repository.
 #   pages:       Boolean, whether to enable GitHub Pages defaults (see newScoreRepo).
-#   subcategory: Optional string to refine the "category" custom property.
-#                When null, the category is set to "infrastructure".
-#                When non-null, the category is set to "infrastructure.<subcategory>".
-#                Use short, identifier-like values (no spaces), e.g. "ci", "tooling", "secrets".
+#   subcategory: Optional string stored as a "subcategory" custom property alongside "category".
+#                This helper always sets the category to "infrastructure", so the effective
+#                category is conceptually either "infrastructure" (no subcategory) or
+#                "infrastructure.<subcategory>" when a subcategory is given.
 local newInfrastructureTeamRepo(name, pages = false, subcategory = null) =
-  local cat = if subcategory != null then "infrastructure." + subcategory else "infrastructure";
 
-  newScoreRepo(name, pages) {
-    custom_properties: {
-      category: cat,
-    }
-  };
+  newScoreRepo(name, pages = pages, category = "infrastructure", subcategory = subcategory);
 
 # Publication to pypi can only be triggered by infrastructure-maintainers and only from main branch or tag
 local pypi_infra_env = orgs.newEnvironment('pypi') {
@@ -159,12 +168,15 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
     custom_properties+: [
       # This is used to categorize repositories for the auto-generated organization README file.
-      # The value is expected to be in the format "category.subcategory", but this is not enforced.
       # The subcategory is optional and can be used to further categorize repositories. For example, "infrastructure.bazel" or "modules.communication".
       orgs.newCustomProperty('category') {
         description: "Category used to group repositories in the auto-generated organization README file",
         value_type: "string",
-      }
+      },
+      orgs.newCustomProperty('subcategory') {
+        description: "Subcategory used to further group repositories within a category in the auto-generated organization README file",
+        value_type: "string",
+      },
     ]
   },
   teams+: [
@@ -417,7 +429,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
-    newScoreRepo('eclipse-score.github.io', pages = true) {
+    newScoreRepo('eclipse-score.github.io', pages = true, category = "website") {
       description: "The landing page website for the Score project",
       homepage: "https://eclipse-score.github.io/",
       topics+: [
@@ -433,7 +445,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
-    newScoreRepo('eclipse-score-website') {
+    newScoreRepo('eclipse-score-website', category = "website") {
       allow_rebase_merge: true,
       dependabot_security_updates_enabled: false,
       has_projects: true,
@@ -447,7 +459,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         orgs.newEnvironment('pull-request-preview'),
       ],
     },
-    newScoreRepo('eclipse-score-website-published') {
+    newScoreRepo('eclipse-score-website-published', category = "website") {
       allow_rebase_merge: true,
       dependabot_security_updates_enabled: false,
       has_projects: true,
@@ -458,7 +470,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       delete_branch_on_merge: false,
       dependabot_alerts_enabled: false,
     },
-    newScoreRepo('eclipse-score-website-preview') {
+    newScoreRepo('eclipse-score-website-preview', category = "website") {
       allow_rebase_merge: true,
       dependabot_security_updates_enabled: false,
       has_projects: true,
