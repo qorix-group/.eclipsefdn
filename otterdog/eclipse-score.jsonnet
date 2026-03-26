@@ -1370,7 +1370,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Incubation repository for SOME/IP gateway feature",
     },
     newDependableElementRepo('inc_diagnostics') {
-      archived: true,
       description: "Incubation repository for diagnostics feature",
     },
     newDependableElementRepo('inc_ai_platform') {
