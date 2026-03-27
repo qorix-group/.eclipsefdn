@@ -125,7 +125,13 @@ local qnx_environments = [
 
 # Repositories that are based on the module_template and offer GitHub Pages for documentation
 # should use this function, as it includes the necessary settings for both.
-local newDependableElementRepo(name) = newScoreRepo(name, true) {
+# Parameters:
+#   name:        Name of the repository.
+#   subcategory: Optional string stored as a "subcategory" custom property alongside "category".
+#                This helper always sets the category to "modules", so the effective
+#                category is conceptually either "modules" (no subcategory) or
+#                "modules.<subcategory>" when a subcategory is given.
+local newDependableElementRepo(name, subcategory = null) = newScoreRepo(name, pages = true, category = "modules", subcategory = subcategory) {
   template_repository: "eclipse-score/module_template",
   environments+: qnx_environments,
 };
@@ -538,7 +544,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         ],
 
     },
-    orgs.newRepo('score-crates') {
+    newScoreRepo('score-crates') {
       allow_merge_commit: true,
       allow_update_branch: false,
       // TODO: re-enable after some code has been added to the repository
@@ -659,24 +665,12 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         orgs.newEnvironment('github-pages'),
       ],
     },
-    orgs.newRepo('itf') {
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      code_scanning_default_setup_enabled: true,
-      code_scanning_default_languages: [
-        "actions",
-      ],
+    newScoreRepo('itf') {
       description: "Integration Testing Framework repository",
-      gh_pages_build_type: "legacy",
-      gh_pages_source_branch: "gh-pages",
-      gh_pages_source_path: "/",
-      has_discussions: true,
-      homepage: "https://eclipse-score.github.io/itf",
-      topics+: [
-        "itf",
-        "score",
-        "testing"
-      ],
+
+      # Deviations from standard newScoreRepo settings:
+      allow_merge_commit: true,
+      allow_rebase_merge: true,
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
@@ -690,56 +684,23 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             ],
           },
           required_merge_queue: orgs.newMergeQueue() {
-            merge_method: "MERGE",
+            merge_method: "SQUASH",
           },
         },
       ],
-      environments: [
-        orgs.newEnvironment('github-pages'),
-        orgs.newEnvironment('workflow-approval') {
-          deployment_branch_policy: "all",
-          reviewers+: [
-            "@eclipse-score/automotive-score-committers",
-          ],
-          wait_timer: 1,
-        },
-      ],
+      environments+: qnx_environments,
     },
-    orgs.newRepo('bazel_platforms') {
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      code_scanning_default_setup_enabled: true,
+    newInfrastructureTeamRepo('bazel_platforms', subcategory = "toolchains") {
       description: "Bazel platform definitions used by S-CORE modules",
-      homepage: "https://eclipse-score.github.io/bazel_platforms",
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: default_review_rule,
-        },
-      ],
     },
     newScoreRepo('process_description', pages = true) {
-      has_projects: true,
+      description: "Score project process description",
 
-      // Custom merge settings.
+      // Deviations from standard newScoreRepo settings:
+      has_projects: true,
       allow_merge_commit: true,
       allow_rebase_merge: true,
       allow_update_branch: false,
-      description: "Score project process description",
-      topics+: [
-        "process",
-        "score"
-      ],
-      environments: [
-        orgs.newEnvironment('github-pages') {
-          branch_policies+: [
-            "main"
-          ],
-          deployment_branch_policy: "selected",
-        },
-      ],
     },
     newInfrastructureTeamRepo('reference_integration', true, subcategory = "integration") {
       description: "Score project integration repository",
@@ -789,34 +750,23 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "OS Images for testing and deliveries",
     },
 
-    orgs.newRepo('score') {
+    newScoreRepo('score', pages = true) {
+      description: "Score project main repository",
+
+      # Deviations from standard newScoreRepo settings:
+      allow_rebase_merge: true,
       allow_merge_commit: true,
+      has_projects: true,
       allow_update_branch: false,
       code_scanning_default_languages+: [
         "actions",
       ],
       code_scanning_default_setup_enabled: true,
-      description: "Score project main repository",
       gh_pages_build_type: "legacy",
       gh_pages_source_branch: "gh-pages",
       gh_pages_source_path: "/",
       has_discussions: true,
       has_wiki: true,
-      homepage: "https://eclipse-score.github.io/score",
-      topics+: [
-        "score"
-      ],
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: default_review_rule,
-        },
-      ],
-      environments: [
-        orgs.newEnvironment('github-pages'),
-      ],
     },
 
     newInfrastructureTeamRepo('tooling') {
@@ -917,15 +867,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           ],
         ),
       ],
-      environments: [
-        orgs.newEnvironment('workflow-approval') {
-          deployment_branch_policy: "all",
-          reviewers+: [
-            "@eclipse-score/automotive-score-committers",
-          ],
-          wait_timer: 1,
-        },
-      ],
       webhooks+: [
         orgs.newRepoWebhook('https://app.readthedocs.org/api/v2/webhook/score-communication/319863/') {
           content_type: "json",
@@ -978,49 +919,16 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Bazel C/C++ toolchain configuration repository",
       environments+: qnx_environments,
     },
-    orgs.newRepo('toolchains_gcc') {
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      code_scanning_default_setup_enabled: true,
+    newInfrastructureTeamRepo('toolchains_gcc', subcategory = "toolchains") {
       description: "Bazel toolchains for GNU GCC",
-      homepage: "https://eclipse-score.github.io/toolchains_gcc",
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: default_review_rule,
-        },
-      ],
     },
-    orgs.newRepo('toolchains_gcc_packages') {
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      code_scanning_default_setup_enabled: true,
+    newInfrastructureTeamRepo('toolchains_gcc_packages', subcategory = "toolchains") {
       description: "Bazel toolchains for GNU GCC",
-      homepage: "https://eclipse-score.github.io/toolchains_gcc_packages",
-      code_scanning_default_languages+: [
-        "actions",
-      ],
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: default_review_rule,
-        },
-      ],
     },
-    orgs.newRepo('toolchains_qnx') {
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      code_scanning_default_languages+: [
-        "actions",
-        "python",
-      ],
-      code_scanning_default_setup_enabled: true,
+    newInfrastructureTeamRepo('toolchains_qnx', subcategory = "toolchains") {
       description: "Bazel toolchains for QNX",
-      homepage: "https://eclipse-score.github.io/toolchains_qnx",
+
+      # Deviations from standard newScoreRepo settings:
       environments+: qnx_environments,
       rulesets: [
         orgs.newRepoRuleset('main') {
@@ -1039,23 +947,11 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
-    orgs.newRepo('toolchains_rust') {
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      code_scanning_default_setup_enabled: true,
+    newInfrastructureTeamRepo('toolchains_rust', subcategory = "toolchains") {
       description: "Rust toolchains",
-      homepage: "https://eclipse-score.github.io/toolchains_rust",
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: default_review_rule,
-        },
-      ],
     },
 
-    newInfrastructureTeamRepo('ferrocene_toolchain_builder') {
+    newInfrastructureTeamRepo('ferrocene_toolchain_builder', subcategory = "toolchains") {
       description: "Builder for Ferrocene artifacts",
       environments+: qnx_environments,
     },
@@ -1084,9 +980,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
 
     newDependableElementRepo('orchestrator') {
-      aliases: [
-        "inc_orchestrator",
-      ],
       description: "Orchestration framework & Safe async runtime for Rust",
 
       # Deviations from standard dependable element repository settings:
@@ -1187,7 +1080,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
-    newInfrastructureTeamRepo('score_rust_policies') {
+    newInfrastructureTeamRepo('score_rust_policies', subcategory = "toolchains") {
       description: "Centralized Rust linting and formatting policies for S-CORE, including safety-critical guidelines.",
       gh_pages_build_type: "workflow",
       homepage: "https://eclipse-score.github.io/score_rust_policies",
@@ -1200,7 +1093,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
-    newInfrastructureTeamRepo('score_cpp_policies') {
+    newInfrastructureTeamRepo('score_cpp_policies', subcategory = "toolchains") {
       description: "Centralized C++ quality tool policies for S-CORE, including sanitizer configurations and safety-critical guidelines.",
       gh_pages_build_type: "workflow",
       homepage: "https://eclipse-score.github.io/score_cpp_policies",
@@ -1213,7 +1106,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
-    newInfrastructureTeamRepo('bazel_registry_ui', pages = true) {
+    newInfrastructureTeamRepo('bazel_registry_ui', pages = true, subcategory = "tooling") {
       description: "House the ui for bazel_registry in Score",
       rulesets: [], # reset rulesets
       gh_pages_build_type: "legacy",
@@ -1222,7 +1115,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       forked_repository:"bazel-contrib/bcr-ui",
     },
 
-    newInfrastructureTeamRepo("rules_rust") {
+    newInfrastructureTeamRepo("rules_rust", subcategory = "toolchains") {
       description: "S-CORE fork of bazelbuild/rules_rust",
       forked_repository: "bazelbuild/rules_rust",
       default_branch: "score_main",
@@ -1244,7 +1137,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "GitHub Action to execute apt-install in a clever way",
     },
 
-    newInfrastructureTeamRepo('devcontainer') {
+    newInfrastructureTeamRepo('devcontainer', subcategory = "tooling") {
       description: "Common DevContainer for Eclipse S-CORE",
       delete_branch_on_merge: true,
       squash_merge_commit_title: "PR_TITLE",
@@ -1267,7 +1160,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       ],
     },
 
-    newInfrastructureTeamRepo('dash-license-scan') {
+    newInfrastructureTeamRepo('dash-license-scan', subcategory = "tooling") {
       description: "pipx/uvx wrapper for the dash-licenses tool",
       environments+: [
         pypi_infra_env,
@@ -1295,19 +1188,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "All general information related to the development and integration infrastructure",
     },
 
-    orgs.newRepo('testing_tools') {
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      code_scanning_default_setup_enabled: true,
+    newScoreRepo('testing_tools') {
       description: "Repository for testing utilities",
-      rulesets: [
-        orgs.newRepoRuleset('main') {
-          include_refs+: [
-            "refs/heads/main"
-          ],
-          required_pull_request+: default_review_rule,
-        },
-      ],
     },
 
     newDependableElementRepo('inc_json') {
@@ -1317,20 +1199,20 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     newDependableElementRepo('feo') {
       description: "Repository for the Fixed Order Execution (FEO) framework",
     },
-    newDependableElementRepo('inc_daal') {
+    newDependableElementRepo('inc_daal', subcategory = "incubation") {
       description: "Incubation repository for DAAL module",
     },
-    newDependableElementRepo('inc_os_autosd') {
+    newDependableElementRepo('inc_os_autosd', subcategory = "incubation") {
       description: "Incubation repository for AutoSD Development Platform",
     },
-    newDependableElementRepo('bazel-tools-python') {
+    newScoreRepo('bazel-tools-python') {
       description: "Repository for python static code checker",
     },
     newDependableElementRepo('inc_config_management') {
       archived: true,
       description: "Incubation repository for config management",
     },
-    newDependableElementRepo('bazel-tools-cc') {
+    newScoreRepo('bazel-tools-cc') {
       description: "Repository for clang-tidy based static code checker",
     },
     newDependableElementRepo('logging') {
@@ -1366,10 +1248,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       archived: true,
       description: "Incubation repository for ABI compatible data types feature",
     },
-    newDependableElementRepo('inc_someip_gateway') {
+    newDependableElementRepo('inc_someip_gateway', subcategory = "incubation") {
       description: "Incubation repository for SOME/IP gateway feature",
     },
-    newDependableElementRepo('inc_diagnostics') {
+    newDependableElementRepo('inc_diagnostics', subcategory = "incubation") {
       description: "Incubation repository for diagnostics feature",
     },
     newDependableElementRepo('inc_ai_platform') {
@@ -1404,21 +1286,18 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           },
         ],
     },
-    newDependableElementRepo('inc_time') {
+    newDependableElementRepo('inc_time', subcategory = "incubation") {
       description: "incubation repo for time sync module",
 
       # Deviations from standard dependable element repository settings:
       allow_merge_commit: true,
     },
-    orgs.newRepo('config_management') {
-      allow_merge_commit: false,
-      allow_update_branch: false,
-      code_scanning_default_setup_enabled: false,
-      gh_pages_build_type: "workflow",
-      template_repository: "eclipse-score/module_template",
-      has_discussions: true,
-      has_wiki: false,
+    newDependableElementRepo('config_management') {
       description: "Repository for config management",
+
+      # Deviations from standard dependable element repository settings:
+      allow_rebase_merge: true,
+      allow_update_branch: false,
       rulesets: [
         orgs.newRepoRuleset('main') {
           include_refs+: [
