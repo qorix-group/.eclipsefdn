@@ -665,7 +665,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         orgs.newEnvironment('github-pages'),
       ],
     },
-    newScoreRepo('itf') {
+    newInfrastructureTeamRepo('itf', subcategory = "integration") {
       description: "Integration Testing Framework repository",
 
       # Deviations from standard newScoreRepo settings:
@@ -684,7 +684,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             ],
           },
           required_merge_queue: orgs.newMergeQueue() {
-            merge_method: "SQUASH",
+            merge_method: "MERGE",
           },
         },
       ],
@@ -693,7 +693,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     newInfrastructureTeamRepo('bazel_platforms', subcategory = "toolchains") {
       description: "Bazel platform definitions used by S-CORE modules",
     },
-    newScoreRepo('process_description', pages = true) {
+    newScoreRepo('process_description', pages = true, category = "general") {
       description: "Score project process description",
 
       // Deviations from standard newScoreRepo settings:
@@ -750,7 +750,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "OS Images for testing and deliveries",
     },
 
-    newScoreRepo('score', pages = true) {
+    newScoreRepo('score', pages = true, category = "general") {
       description: "Score project main repository",
 
       # Deviations from standard newScoreRepo settings:
