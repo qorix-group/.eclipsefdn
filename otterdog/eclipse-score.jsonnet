@@ -433,6 +433,9 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           ]
         ),
       ],
+      environments: [
+        orgs.newEnvironment('copilot'),
+      ],
     },
 
     newScoreRepo('eclipse-score.github.io', pages = true, category = "website") {
@@ -707,7 +710,8 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       topics+: [
         "integration",
       ],
-      environments+: qnx_environments,
+      environments+: qnx_environments + 
+        [orgs.newEnvironment('copilot')],
       # Deviations from standard dependable element repository settings:
       allow_rebase_merge: true,
       allow_update_branch: true,
@@ -1205,6 +1209,16 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     newScoreRepo('bazel-tools-python') {
       description: "Repository for python static code checker",
+    } 
+    + { template_repository: "eclipse-score/module_template", 
+        environments: [
+        orgs.newEnvironment('github-pages') {
+          branch_policies+: [
+            "main"
+          ],
+          deployment_branch_policy: "selected",
+        },
+      ],
     },
     newDependableElementRepo('inc_config_management') {
       archived: true,
@@ -1212,6 +1226,17 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     newInfrastructureTeamRepo('bazel-tools-cc', subcategory = "toolchains") {
       description: "Repository for clang-tidy based static code checker",
+    }
+    + { 
+      template_repository: "eclipse-score/module_template" ,
+      environments: [
+        orgs.newEnvironment('github-pages') {
+          branch_policies+: [
+            "main"
+          ],
+          deployment_branch_policy: "selected",
+        },
+      ],
     },
     newDependableElementRepo('logging') {
       description: "Repository for logging daemon",
