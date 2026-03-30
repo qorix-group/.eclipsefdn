@@ -1248,6 +1248,26 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
     },
     newDependableElementRepo('inc_someip_gateway', subcategory = "incubation") {
       description: "Incubation repository for SOME/IP gateway feature",
+      delete_branch_on_merge: true,
+      squash_merge_commit_title: "PR_TITLE",
+      squash_merge_commit_message: "PR_BODY",
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "~DEFAULT_BRANCH"
+          ],
+          required_pull_request+: default_review_rule,
+          required_status_checks+: {
+            status_checks+: [
+              "ci/can_merge",
+              "ci_pull_request_target/can_merge",
+            ],
+          },
+          required_merge_queue: orgs.newMergeQueue() {
+            merge_method: "SQUASH",
+          },
+        },
+      ],
     },
     newDependableElementRepo('inc_diagnostics', subcategory = "incubation") {
       description: "Incubation repository for diagnostics feature",
