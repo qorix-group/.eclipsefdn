@@ -104,6 +104,7 @@ local qnx_enabled_repos = [
     "logging",
     "orchestrator",
     "persistency",
+    "qnx_unit_tests",
     "reference_integration",
     "rules_imagefs",
     "scrample",
@@ -1354,6 +1355,31 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           requires_linear_history: true,
         },
       ],
+    },
+    newInfrastructureTeamRepo('qnx_unit_tests', subcategory = "testing") {
+      description: "Infrastructure for running unit tests in QNX VMs",
+
+      # Deviations from standard newInfrastructureTeamRepo settings:
+      allow_merge_commit: true,
+      allow_rebase_merge: true,
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main"
+          ],
+          required_pull_request+: default_review_rule,
+          required_status_checks+: {
+            status_checks+: [
+              "qnx-ut-build-all",
+              "qnx-ut-examples-build-all",
+            ],
+          },
+          required_merge_queue: orgs.newMergeQueue() {
+            merge_method: "MERGE",
+          },
+        },
+      ],
+      environments+: qnx_environments,
     }
   ],
 }
