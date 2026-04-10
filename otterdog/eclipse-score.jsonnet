@@ -685,6 +685,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
             status_checks+: [
               "itf-build-all",
               "itf-examples-build-all",
+              "itf-qnx-qemu-tests-build-all",
             ],
           },
           required_merge_queue: orgs.newMergeQueue() {
