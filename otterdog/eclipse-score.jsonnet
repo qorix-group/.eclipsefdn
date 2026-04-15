@@ -1308,7 +1308,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "Incubation repository for Generative AI feature",
     },
     newDependableElementRepo('inc_security_crypto') {
-      archived: true,
       description: "Incubation repository for Security & Cryptography feature",
     },
     newDependableElementRepo('kyron') {
