@@ -98,6 +98,7 @@ local qnx_enabled_repos = [
     "communication",
     "ferrocene_toolchain_builder",
     "inc_someip_gateway",
+    "inc_time",
     "itf",
     "kyron",
     "lifecycle",
