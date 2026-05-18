@@ -407,7 +407,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       code_scanning_default_setup_enabled: true,
       code_scanning_default_languages+: [
         "actions",
-        "python",
+        "python"
       ],
     },
 
