@@ -41,6 +41,71 @@ local block_tagging(tags, bypass) =
   required_status_checks: null,
 };
 
+# This list is generated with the detect_languages.py script.
+# There is no fancy automation, just run the script and copy-paste the output here when you want to update it.
+local active_languages = {
+  ".eclipsefdn": ['actions'],
+  ".github": ['actions', 'python'],
+  "apt-install": ['actions'],
+  "baselibs": ['actions', 'c-cpp'],
+  "baselibs_rust": ['actions', 'c-cpp'],
+  "bazel-tools-cc": ['actions', 'c-cpp', 'python'],
+  "bazel-tools-python": ['actions', 'python'],
+  "bazel_cpp_toolchains": ['actions', 'python'],
+  "bazel_platforms": ['actions'],
+  "bazel_registry": ['actions', 'python'],
+  "bazel_registry_ui": ['actions', 'javascript-typescript'],
+  "cicd-actions": ['actions'],
+  "cicd-workflows": ['actions'],
+  "communication": ['actions', 'c-cpp'],
+  "config_management": ['actions', 'c-cpp'],
+  "dash-license-scan": ['actions', 'python'],
+  "dev_playground": ['actions'],
+  "devcontainer": ['actions', 'python'],
+  "docs-as-code": ['actions', 'python'],
+  "eclipse-score-website": ['actions', 'javascript-typescript'],
+  "eclipse-score-website-preview": ['actions'],
+  "eclipse-score-website-published": ['actions', 'javascript-typescript'],
+  "eclipse-score.github.io": ['actions', 'python'],
+  "feo": ['actions', 'c-cpp'],
+  "ferrocene_toolchain_builder": ['actions', 'python'],
+  "inc_daal": ['actions', 'c-cpp'],
+  "inc_diagnostics": ['actions', 'c-cpp'],
+  "inc_os_autosd": ['actions', 'c-cpp'],
+  "inc_security_crypto": ['actions', 'c-cpp'],
+  "inc_someip_gateway": ['actions', 'c-cpp', 'python'],
+  "inc_time": ['actions', 'c-cpp', 'python'],
+  "infrastructure": ['actions'],
+  "itf": ['actions', 'python'],
+  "kyron": ['actions', 'python'],
+  "lifecycle": ['actions', 'c-cpp', 'python'],
+  "logging": ['actions', 'c-cpp'],
+  "module_template": ['actions', 'c-cpp', 'python'],
+  "more-disk-space": ['actions', 'javascript-typescript', 'python'],
+  "nlohmann_json": ['actions', 'c-cpp', 'python'],
+  "orchestrator": ['actions', 'python'],
+  "os_images": ['actions'],
+  "persistency": ['actions', 'c-cpp', 'python'],
+  "process_description": ['actions', 'python'],
+  "qnx_unit_tests": ['actions', 'c-cpp'],
+  "reference_integration": ['actions', 'python'],
+  "rules_imagefs": ['actions'],
+  "rules_rust": ['actions'],
+  "sbom-tool": ['actions', 'python'],
+  "score": ['actions'],
+  "score-crates": ['actions'],
+  "score_cpp_policies": ['actions'],
+  "score_rust_policies": ['actions'],
+  "scrample": ['actions', 'c-cpp', 'go'],
+  "testing_tools": ['actions', 'c-cpp', 'python'],
+  "toolchains_gcc": ['actions', 'c-cpp'],
+  "toolchains_gcc_packages": ['actions'],
+  "toolchains_qnx": ['actions', 'python'],
+  "toolchains_rust": ['actions'],
+  "tooling": ['actions', 'python'],
+  "tools": ['actions'],
+};
+
 // Hint: Override all options as required when creating a new repository. See below for examples.
 // Parameters:
 //   name: The name of the repository.
@@ -147,8 +212,12 @@ local newDependableElementRepo(name, subcategory = null) = newScoreRepo(name, pa
 #                category is conceptually either "infrastructure" (no subcategory) or
 #                "infrastructure.<subcategory>" when a subcategory is given.
 local newInfrastructureTeamRepo(name, pages = false, subcategory = null) =
-
-  newScoreRepo(name, pages = pages, category = "infrastructure", subcategory = subcategory);
+  newScoreRepo(name, pages = pages, category = "infrastructure", subcategory = subcategory)
+  {
+    # enable github code scanning for all infrastructure repositories
+    code_scanning_default_setup_enabled: true,
+    code_scanning_default_languages+: std.get(active_languages, name, []),
+  };
 
 # Publication to pypi can only be triggered by infrastructure-maintainers and only from main branch or tag
 local pypi_infra_env = orgs.newEnvironment('pypi') {
@@ -404,11 +473,6 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
   _repositories+:: [
     newInfrastructureTeamRepo('.github', pages = true) {
       description: "Houses the organisation README",
-      code_scanning_default_setup_enabled: true,
-      code_scanning_default_languages+: [
-        "actions",
-        "python"
-      ],
     },
 
     newInfrastructureTeamRepo('bazel_registry', subcategory = "tooling") {
@@ -1122,6 +1186,11 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
     newInfrastructureTeamRepo('bazel_registry_ui', pages = true, subcategory = "tooling") {
       description: "House the ui for bazel_registry in Score",
+
+      # It's a fork. We don't want to change the entire codebase.
+      code_scanning_default_setup_enabled: false,
+      dependabot_security_updates_enabled: false,
+
       rulesets: [], # reset rulesets
       gh_pages_build_type: "legacy",
       gh_pages_source_branch: "gh-pages",
@@ -1133,6 +1202,11 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "S-CORE fork of bazelbuild/rules_rust",
       forked_repository: "bazelbuild/rules_rust",
       default_branch: "score_main",
+
+      # It's a fork. We don't want to change the entire codebase.
+      code_scanning_default_setup_enabled: false,
+      dependabot_security_updates_enabled: false,
+
       rulesets+: [
         orgs.newRepoRuleset('score_main') {
           include_refs+: [
