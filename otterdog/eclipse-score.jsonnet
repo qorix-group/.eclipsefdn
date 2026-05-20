@@ -772,6 +772,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
     newInfrastructureTeamRepo('tooling') {
       description: "Tooling for Eclipse S-CORE",
+      gh_pages_build_type: "workflow",
       allow_rebase_merge: true,
       environments+: [
         orgs.newEnvironment('copilot'),
