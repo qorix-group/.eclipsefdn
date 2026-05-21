@@ -1324,6 +1324,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
         },
       ],
     },
+    newScoreRepo('mcp-servers') {
+      description: "Repository for MCP servers",
+    },
+    
     newDependableElementRepo('logging') {
       description: "Repository for logging daemon",
 
