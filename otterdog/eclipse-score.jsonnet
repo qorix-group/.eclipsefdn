@@ -931,6 +931,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
               "build_and_test_qnx",
               "build_and_test_asan_ubsan_lsan",
               "build_and_test_tsan",
+              "clang-tidy",
             ],
           },
           required_merge_queue: orgs.newMergeQueue() {
