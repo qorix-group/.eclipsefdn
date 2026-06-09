@@ -1139,6 +1139,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
       # Deviations from standard dependable element repository settings:
       allow_update_branch: true,
+      archived: true,
       allow_rebase_merge: true,
       branch_protection_rules: [
         main_branch_protection_rule
