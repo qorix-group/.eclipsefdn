@@ -44,18 +44,16 @@ local block_tagging(tags, bypass) =
 # This list is generated with the detect_languages.py script.
 # There is no fancy automation, just run the script and copy-paste the output here when you want to update it.
 local active_languages = {
-  ".eclipsefdn": ['actions'],
-  ".github": ['actions', 'python'],
+  ".eclipsefdn": ['actions', 'python'],
+  ".github": ['actions', 'javascript-typescript', 'python'],
   "apt-install": ['actions'],
   "baselibs": ['actions', 'c-cpp'],
-  "baselibs_rust": ['actions', 'c-cpp'],
   "bazel-tools-cc": ['actions', 'c-cpp', 'python'],
   "bazel-tools-python": ['actions', 'python'],
   "bazel_cpp_toolchains": ['actions', 'python'],
-  "bazel_platforms": [],
   "bazel_registry": ['actions', 'python'],
   "bazel_registry_ui": ['actions', 'javascript-typescript'],
-  "cicd-actions": ['actions'],
+  "cicd-actions": ['actions', 'javascript-typescript'],
   "cicd-workflows": ['actions'],
   "communication": ['actions', 'c-cpp'],
   "config_management": ['actions', 'c-cpp'],
@@ -72,29 +70,30 @@ local active_languages = {
   "inc_daal": ['actions', 'c-cpp'],
   "inc_diagnostics": ['actions', 'c-cpp'],
   "inc_os_autosd": ['actions', 'c-cpp'],
-  "inc_security_crypto": ['actions', 'c-cpp'],
+  "inc_security_crypto": ['actions', 'c-cpp', 'python'],
   "inc_someip_gateway": ['actions', 'c-cpp', 'python'],
   "inc_time": ['actions', 'c-cpp', 'python'],
-  "infrastructure": [],
+  "infrastructure": ['actions'],
   "itf": ['actions', 'python'],
   "kyron": ['actions', 'python'],
-  "lifecycle": ['actions', 'c-cpp', 'python'],
+  "lifecycle": ['actions', 'c-cpp'],
   "logging": ['actions', 'c-cpp'],
   "module_template": ['actions', 'c-cpp', 'python'],
-  "more-disk-space": ['actions', 'javascript-typescript', 'python'],
+  "more-disk-space": ['actions', 'javascript-typescript'],
   "nlohmann_json": ['actions', 'c-cpp', 'python'],
   "orchestrator": ['actions', 'python'],
   "os_images": ['actions'],
   "persistency": ['actions', 'c-cpp', 'python'],
   "process_description": ['actions', 'python'],
   "qnx_unit_tests": ['actions', 'c-cpp'],
-  "reference_integration": ['actions', 'python'],
+  # reference_integration has a custom CodeQL job. The default setup must be disabled.
+  #"reference_integration": ['actions', 'c-cpp', 'python'],
   "rules_imagefs": ['actions'],
   "rules_rust": ['actions'],
   "sbom-tool": ['python'],
   "score": ['actions'],
   "score-crates": ['actions'],
-  "score_cpp_policies": ['actions'],
+  "score_cpp_policies": ['actions', 'c-cpp'],
   "score_rust_policies": ['actions'],
   "scrample": ['actions', 'c-cpp', 'go'],
   "testing_tools": ['actions', 'c-cpp', 'python'],
@@ -103,7 +102,6 @@ local active_languages = {
   "toolchains_qnx": ['actions', 'python'],
   "toolchains_rust": ['actions'],
   "tooling": ['actions', 'python'],
-  "tools": [],
 };
 
 // Hint: Override all options as required when creating a new repository. See below for examples.
@@ -214,8 +212,8 @@ local newDependableElementRepo(name, subcategory = null) = newScoreRepo(name, pa
 local newInfrastructureTeamRepo(name, pages = false, subcategory = null) =
   newScoreRepo(name, pages = pages, category = "infrastructure", subcategory = subcategory)
   {
-    # enable github code scanning for all infrastructure repositories
-    code_scanning_default_setup_enabled: true,
+    # enable github code scanning for infrastructure repositories that have active languages
+    code_scanning_default_setup_enabled: std.objectHas(active_languages, name),
     code_scanning_default_languages+: std.get(active_languages, name, []),
   };
 
