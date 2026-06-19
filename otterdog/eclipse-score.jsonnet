@@ -615,6 +615,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       //   "actions",
       // ],
       description: "Repository to provide a defined list of rust crates to be used as bzl_mods",
+      gh_pages_build_type: "workflow",
       homepage: "https://eclipse-score.github.io/score-crates",
       rulesets: [
         orgs.newRepoRuleset('main') {
