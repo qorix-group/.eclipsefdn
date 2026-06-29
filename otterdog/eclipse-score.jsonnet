@@ -72,7 +72,6 @@ local active_languages = {
   "inc_os_autosd": ['actions', 'c-cpp'],
   "inc_security_crypto": ['actions', 'c-cpp', 'python'],
   "inc_someip_gateway": ['actions', 'c-cpp', 'python'],
-  "inc_time": ['actions', 'c-cpp', 'python'],
   "infrastructure": ['actions'],
   "itf": ['actions', 'python'],
   "kyron": ['actions', 'python'],
@@ -97,6 +96,7 @@ local active_languages = {
   "score_rust_policies": ['actions'],
   "scrample": ['actions', 'c-cpp', 'go'],
   "testing_tools": ['actions', 'c-cpp', 'python'],
+  "time": ['actions', 'c-cpp', 'python'],
   "toolchains_gcc": ['c-cpp'],
   "toolchains_gcc_packages": ['actions'],
   "toolchains_qnx": ['actions', 'python'],
@@ -161,7 +161,6 @@ local qnx_enabled_repos = [
     "communication",
     "ferrocene_toolchain_builder",
     "inc_someip_gateway",
-    "inc_time",
     "itf",
     "kyron",
     "lifecycle",
@@ -172,6 +171,7 @@ local qnx_enabled_repos = [
     "reference_integration",
     "rules_imagefs",
     "scrample",
+    "time",
     "toolchains_qnx",
 ];
 
@@ -1420,11 +1420,30 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
           },
         ],
     },
-    newDependableElementRepo('inc_time', subcategory = "incubation") {
-      description: "incubation repo for time sync module",
+    newDependableElementRepo('time') {
+      aliases: [
+        "inc_time",
+      ],
+      description: "Time synchronization module",
 
       # Deviations from standard dependable element repository settings:
       allow_merge_commit: true,
+      allow_update_branch: true,
+      allow_rebase_merge: true,
+
+      branch_protection_rules: [
+        main_branch_protection_rule
+      ],
+      rulesets: [
+          orgs.newRepoRuleset('main') {
+            include_refs+: [
+              "refs/heads/main"
+            ],
+            required_pull_request+: default_review_rule,
+            allows_force_pushes: false,
+            requires_linear_history: true,
+          },
+      ],
     },
     newDependableElementRepo('config_management') {
       description: "Repository for config management",
