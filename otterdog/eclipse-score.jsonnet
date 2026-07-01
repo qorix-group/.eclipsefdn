@@ -930,7 +930,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
               "GCC15 / Build & Test",
               "QCC - Build & Test",
               "Address & Undefined Behavior Sanitizer / Build & Test",
-              "Thread Sanitizer / Build & Test ",
+              "Thread Sanitizer / Build & Test",
               "Clang-Tidy / Build & Test",
             ],
           },
