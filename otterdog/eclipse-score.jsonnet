@@ -767,11 +767,7 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       allow_update_branch: false,
       environments: [
         orgs.newEnvironment('github-pages') {
-          branch_policies+: [
-            "main",
-            "tag:*",
-          ],
-          deployment_branch_policy: "selected",
+          deployment_branch_policy: "all",
         },
       ],
     },
