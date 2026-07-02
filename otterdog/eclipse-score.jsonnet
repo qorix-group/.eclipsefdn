@@ -765,6 +765,15 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       allow_merge_commit: true,
       allow_rebase_merge: true,
       allow_update_branch: false,
+      environments: [
+        orgs.newEnvironment('github-pages') {
+          branch_policies+: [
+            "main",
+            "tag:*",
+          ],
+          deployment_branch_policy: "selected",
+        },
+      ],
     },
     newInfrastructureTeamRepo('reference_integration', true, subcategory = "integration") {
       description: "Score project integration repository",
