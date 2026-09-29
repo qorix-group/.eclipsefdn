@@ -87,7 +87,8 @@ local active_languages = {
   "persistency": ['actions', 'c-cpp', 'python'],
   "process_description": ['actions', 'javascript-typescript'],
   "qnx_unit_tests": ['actions', 'c-cpp'],
-  "reference_integration": ['actions', 'c-cpp', 'python'],
+  # reference_integration has a custom CodeQL job. The default setup must be disabled.
+  #"reference_integration": ['actions', 'c-cpp', 'python'],
   "rules_imagefs": ['actions'],
   "rules_rust": ['actions'],
   "sbom-tool": ['actions', 'python'],
