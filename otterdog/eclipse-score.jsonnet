@@ -702,6 +702,11 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
 
     newInfrastructureTeamRepo('reference_integration', true, subcategory = "integration") {
       description: "Score project integration repository",
+
+      # It runs its own advanced multi-repo CodeQL workflow; default setup must stay disabled
+      # regardless of the active_languages list above.
+      code_scanning_default_setup_enabled: false,
+
       topics+: [
         "integration",
       ],
